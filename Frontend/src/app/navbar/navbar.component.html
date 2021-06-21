@@ -19,16 +19,13 @@
         </mat-expansion-panel>
       <a mat-list-item routerLink='' routerLinkActive="active-list-item">Master studije</a>
       <a mat-list-item  routerLink='projekti' routerLinkActive="active-list-item">Projekti</a>
-   
-      
-
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="toolbar">
-        <mat-toolbar-row>
-            <button mat-button (click)="toggleSidebar()"><mat-icon>menu</mat-icon></button>
-            <a mat-button  class="logo" routerLink=''><mat-icon>cottage</mat-icon> Houses and stuff <mat-icon>cottage</mat-icon></a>
+        <mat-toolbar-row >
+            <button mat-button (click)="toggleSidebar()" class="sidebar-toggle"><mat-icon>menu</mat-icon></button>
+            <a mat-button routerLink=''><img class="logo" src="../../assets/HousesAndStuff.png"> </a>
             <div fxShow="true" fxHide.lt-md="true" class="toolbar-items">
                 <button mat-button [matMenuTriggerFor]="menu_example">
                     Person Personski
@@ -37,11 +34,15 @@
                     <a mat-menu-item routerLink='' >Something</a>
                     <a mat-menu-item routerLink='' >Log out</a>
                 </mat-menu>
+                <button mat-button>Inbox</button>
                 <button mat-button>Log in</button>
                 <button mat-raised-button color="accent">Sign up</button>
             </div>
         </mat-toolbar-row>
+        <mat-toolbar-row>
+            <xng-breadcrumb class="xng-breadcrumb-root"></xng-breadcrumb>
+        </mat-toolbar-row>
     </mat-toolbar>
-    <ng-content></ng-content>
+    <div class="padabit"><ng-content></ng-content></div>
     </mat-sidenav-content>
 </mat-sidenav-container>

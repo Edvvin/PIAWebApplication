@@ -1,6 +1,7 @@
 .toolbar {
     position: fixed;
     top: 0;
+    height: fit-content;
 }
 
 .toolbar-items{
@@ -9,9 +10,7 @@
 }
 
 .logo{
-    font-size: xx-large;
-    text-decoration: none;
-
+    height: 9vh;
 }
 
 .sidenav-cont {
@@ -31,8 +30,23 @@
   top: 0;
   position: sticky;
 }
+.mat-toolbar-row{
+    height:fit-content; 
+}
 
 .active-list-item{
   background-color: #673AB7;
 }
 
+.xng-breadcrumb-root {
+    padding: 4px 16px;
+    margin-bottom: 10px;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: white;
+    color: white;
+  }
+  
+.padabit{
+    padding-left: 20px;
+}
