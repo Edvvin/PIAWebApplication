@@ -14,11 +14,11 @@
                 <mat-panel-description>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-        <a mat-list-item>Početna</a>
-        <a mat-list-item  routerLink='zaposleni' routerLinkActive="active-list-item">Zaposleni</a>
+        <a mat-list-item>Example 0</a>
+        <a mat-list-item  routerLink='' routerLinkActive="active-list-item">Example 1</a>
         </mat-expansion-panel>
-      <a mat-list-item routerLink='' routerLinkActive="active-list-item">Master studije</a>
-      <a mat-list-item  routerLink='projekti' routerLinkActive="active-list-item">Projekti</a>
+      <a mat-list-item routerLink='' routerLinkActive="active-list-item">Example 2</a>
+      <a mat-list-item  routerLink='' routerLinkActive="active-list-item">Example 3</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -34,9 +34,9 @@
                     <a mat-menu-item routerLink='' >Something</a>
                     <a mat-menu-item routerLink='' >Log out</a>
                 </mat-menu>
-                <button mat-button>Inbox</button>
-                <button mat-button>Log in</button>
-                <button mat-raised-button color="accent">Sign up</button>
+                <button mat-button routerLink='inbox' routerLinkActive="active-list-item">Inbox</button>
+                <button mat-button routerLink='login' routerLinkActive="active-list-item">Log in</button>
+                <button mat-raised-button routerLink='signup' routerLinkActive="active-list-item" color="accent">Sign up</button>
             </div>
         </mat-toolbar-row>
         <mat-toolbar-row>

@@ -1,0 +1,16 @@
+.login-form{
+    size: 100%;
+    justify-content: center;
+    display: flex;
+    margin-top: 5%;
+}
+
+.login-label{
+    justify-content: center;
+    display: flex;
+    margin-top: 5%;
+}
+.validation{
+    justify-content: center;
+    display: flex;
+}

@@ -1,1 +1,34 @@
-<p>login works!</p>
+<span class='login-label'>
+    <h1>Log in</h1>
+</span>
+<div class='login-form' layout='column'>
+    <div flex layout='column'>
+        <div flex>
+            <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <br>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput type="password">
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button color="accent">Login</button>
+        </div>
+        <br>
+        <div flex *ngIf="true" class="validation">
+            <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    There are errors in your inputs
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>I'm visible because I am open</p>
+            </mat-expansion-panel>
+        </div>
+        </div>
+</div>
