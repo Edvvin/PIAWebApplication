@@ -1,0 +1,47 @@
+<mat-sidenav-container class="sidenav-cont">
+  <mat-sidenav  #drawer class="sidenav" fixedInViewport [mode]="'side'" [opened]="sidebar" >
+
+    <mat-nav-list>
+        <a mat-list-item class = "close-sidenav" (click)="sidebar=false"><mat-icon>navigate_before</mat-icon></a>
+        <a mat-list-item>Start</a>
+        <a mat-list-item  routerLink='zaposleni' routerLinkActive="active-list-item">Zaposleni</a>
+      
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Sub
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+        <a mat-list-item>Početna</a>
+        <a mat-list-item  routerLink='zaposleni' routerLinkActive="active-list-item">Zaposleni</a>
+        </mat-expansion-panel>
+      <a mat-list-item routerLink='' routerLinkActive="active-list-item">Master studije</a>
+      <a mat-list-item  routerLink='projekti' routerLinkActive="active-list-item">Projekti</a>
+   
+      
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="toolbar">
+        <mat-toolbar-row>
+            <button mat-button (click)="toggleSidebar()"><mat-icon>menu</mat-icon></button>
+            <a mat-button  class="logo" routerLink=''><mat-icon>cottage</mat-icon> Houses and stuff <mat-icon>cottage</mat-icon></a>
+            <div fxShow="true" fxHide.lt-md="true" class="toolbar-items">
+                <button mat-button [matMenuTriggerFor]="menu_example">
+                    Person Personski
+                </button>
+                <mat-menu #menu_example="matMenu">
+                    <a mat-menu-item routerLink='' >Something</a>
+                    <a mat-menu-item routerLink='' >Log out</a>
+                </mat-menu>
+                <button mat-button>Log in</button>
+                <button mat-raised-button color="accent">Sign up</button>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>

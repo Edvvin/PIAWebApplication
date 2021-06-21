@@ -1,0 +1,38 @@
+.toolbar {
+    position: fixed;
+    top: 0;
+}
+
+.toolbar-items{
+    width: 100%;
+    text-align: right;
+}
+
+.logo{
+    font-size: xx-large;
+    text-decoration: none;
+
+}
+
+.sidenav-cont {
+  height: 100%;
+}
+
+.sidenav {
+  width: 20vw;
+}
+
+.close-sidenav {
+    width: 100%;
+}
+
+.mat-toolbar.mat-primary {
+  z-index: 1;
+  top: 0;
+  position: sticky;
+}
+
+.active-list-item{
+  background-color: #673AB7;
+}
+
