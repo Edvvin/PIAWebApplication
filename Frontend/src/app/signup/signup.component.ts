@@ -9,7 +9,14 @@ export class SignupComponent implements OnInit {
 
   constructor() { }
 
+  selectedFiles : any;
+
   ngOnInit(): void {
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+    console.log(typeof(event.target.files));
   }
 
 }

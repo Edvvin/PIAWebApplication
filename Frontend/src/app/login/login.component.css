@@ -10,7 +10,11 @@
     display: flex;
     margin-top: 5%;
 }
-.validation{
+.validation {
     justify-content: center;
     display: flex;
+}
+
+.validation > * {
+    background-color: #f44336;;
 }

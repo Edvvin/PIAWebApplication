@@ -15,6 +15,9 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { MyEstatesComponent } from './my-estates/my-estates.component';
 import { NewEstateComponent } from './new-estate/new-estate.component';
+import { UserRequestsComponent } from './user-requests/user-requests.component';
+import { EstateCardComponent } from './estate-card/estate-card.component';
+import { ApproveEstatesComponent } from './approve-estates/approve-estates.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { NewEstateComponent } from './new-estate/new-estate.component';
     UserSettingsComponent,
     ChangePasswordComponent,
     MyEstatesComponent,
-    NewEstateComponent
+    NewEstateComponent,
+    UserRequestsComponent,
+    EstateCardComponent,
+    ApproveEstatesComponent
   ],
   imports: [
     BrowserModule,
