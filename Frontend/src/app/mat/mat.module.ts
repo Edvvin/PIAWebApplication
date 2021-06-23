@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -16,6 +17,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCardModule} from '@angular/material/card';
 
 let Materials = [
     MatNativeDateModule,
@@ -25,6 +27,7 @@ let Materials = [
     MatToolbarModule,
     MatInputModule,
     MatCheckboxModule,
+    MatRadioModule,
     MatSelectModule,
     MatSidenavModule,
     MatIconModule,
@@ -34,7 +37,8 @@ let Materials = [
     MatTableModule,
     MatPaginatorModule,
     MatTreeModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule
 ];
 
 @NgModule({

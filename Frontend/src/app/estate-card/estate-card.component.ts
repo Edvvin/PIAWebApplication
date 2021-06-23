@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {Estate} from '../data/estate';
 
 @Component({
   selector: 'app-estate-card',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EstateCardComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+   }
+
+  @Input()
+  estate : Estate;
+
+  rooms : number[];
 
   ngOnInit(): void {
+    this.rooms = Array(this.estate.numberOfRooms).fill(0);
   }
 
 }

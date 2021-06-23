@@ -9,7 +9,7 @@ export class SignupComponent implements OnInit {
 
   constructor() { }
 
-  selectedFiles : any;
+  selectedFiles : object;
 
   ngOnInit(): void {
   }

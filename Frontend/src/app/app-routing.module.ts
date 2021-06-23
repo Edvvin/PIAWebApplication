@@ -5,6 +5,7 @@ import {SignupComponent} from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { MyEstatesComponent } from './my-estates/my-estates.component';
 import { NewEstateComponent } from './new-estate/new-estate.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 
 const routes: Routes = [
@@ -36,6 +37,11 @@ const routes: Routes = [
   {
     path: 'newestate', component: NewEstateComponent,
     data: { breadcrumb: 'New Estate' },
+    canActivate: []
+  },
+  {
+    path: 'usersettings', component: UserSettingsComponent,
+    data: { breadcrumb: 'Settings' },
     canActivate: []
   },
 ];

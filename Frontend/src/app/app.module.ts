@@ -12,12 +12,12 @@ import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { MyEstatesComponent } from './my-estates/my-estates.component';
 import { NewEstateComponent } from './new-estate/new-estate.component';
 import { UserRequestsComponent } from './user-requests/user-requests.component';
 import { EstateCardComponent } from './estate-card/estate-card.component';
 import { ApproveEstatesComponent } from './approve-estates/approve-estates.component';
+import { UserManipulationComponent } from './user-manipulation/user-manipulation.component';
 
 @NgModule({
   declarations: [
@@ -28,12 +28,12 @@ import { ApproveEstatesComponent } from './approve-estates/approve-estates.compo
     HomeComponent,
     InboxComponent,
     UserSettingsComponent,
-    ChangePasswordComponent,
     MyEstatesComponent,
     NewEstateComponent,
     UserRequestsComponent,
     EstateCardComponent,
-    ApproveEstatesComponent
+    ApproveEstatesComponent,
+    UserManipulationComponent
   ],
   imports: [
     BrowserModule,

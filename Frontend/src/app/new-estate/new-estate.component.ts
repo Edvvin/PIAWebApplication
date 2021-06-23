@@ -8,8 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class NewEstateComponent implements OnInit {
 
   constructor() { }
+  
+  selectedFiles : object;
 
   ngOnInit(): void {
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+    console.log(typeof(event.target.files));
   }
 
 }

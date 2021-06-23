@@ -1,1 +1,88 @@
-<p>new-estate works!</p>
+<span class='newestate-label'>
+    <h1>Add new estate</h1>
+</span>
+<div layout="column" class = "newestate-form">
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Estate Description</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Adresa</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-label>Chose estate type</mat-label>
+        <mat-radio-group aria-label="Select an option" [selected]="initialRB">
+            <mat-radio-button value="house" #initialRB>House</mat-radio-button>
+            <mat-radio-button value="flat">Flat</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Floor of apartment</mat-label>
+            <input matInput type="number">
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Number of floors</mat-label>
+            <input matInput type="number">
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Area</mat-label>
+            <input matInput type="number">
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Number of floors</mat-label>
+            <input matInput type="number">
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Number of Rooms</mat-label>
+            <input matInput type="number">
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-radio-group aria-label="Select an option" [selected]="initialFRB">
+            <mat-radio-button value="furnished" #initialFRB>Furnished</mat-radio-button>
+            <mat-radio-button value="notfurnished">Not furnished</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div flex>
+        <mat-form-field class="columns"> <!-- TODO -->
+            <mat-label *ngIf="selectedFiles; else newFile">{{selectedFiles.item(0).name}}</mat-label>
+            <ng-template #newFile>
+                <mat-label>Choose file</mat-label>
+            </ng-template>
+            <input matInput disabled>
+            <button mat-fab matSuffix (click)="fileInput.click()">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+            <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-radio-group aria-label="Select an option" [selected]="initialSRB" #forSaleRent>
+            <mat-radio-button value="sale" #initialSRB>For sale</mat-radio-button>
+            <mat-radio-button value="rent">For rent</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label >Price</mat-label>
+            <input matInput type="number">
+        </mat-form-field>
+    </div>
+    <div flex>
+        <button mat-raised-button color="accent">Submit</button>
+    </div>
+</div>

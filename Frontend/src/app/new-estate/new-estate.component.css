@@ -1,0 +1,40 @@
+.newestate-label{
+    margin-top: 5%;
+    justify-content: center;
+    display: flex;
+}
+.newestate-form{
+    width: 100%;
+    margin-top: 5%;
+    justify-content: center;
+    padding-bottom: 5%;
+}
+.newestate-form div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.newestate-form div .two{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.newestate-form div mat-form-field{
+    width: 30%;
+    justify-content: center;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+mat-radio-group {
+    padding: 20px;
+}
+
+mat-radio-button {
+    padding-left: 40px;
+    padding-right: 40px;
+}
