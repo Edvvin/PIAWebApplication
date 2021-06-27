@@ -18,6 +18,8 @@ import { UserRequestsComponent } from './user-requests/user-requests.component';
 import { EstateCardComponent } from './estate-card/estate-card.component';
 import { ApproveEstatesComponent } from './approve-estates/approve-estates.component';
 import { UserManipulationComponent } from './user-manipulation/user-manipulation.component';
+import { ChatComponent } from './chat/chat.component';
+import { ChatMessageComponent } from './chat-message/chat-message.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { UserManipulationComponent } from './user-manipulation/user-manipulation
     UserRequestsComponent,
     EstateCardComponent,
     ApproveEstatesComponent,
-    UserManipulationComponent
+    UserManipulationComponent,
+    ChatComponent,
+    ChatMessageComponent
   ],
   imports: [
     BrowserModule,

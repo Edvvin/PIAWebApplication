@@ -1,0 +1,53 @@
+<div class="wrapper">
+    <div class="top">
+        <p class="owner">Welcome,  more words lol fdafdsaf dasfasf 43243</p>
+        <div fxShow="true" fxHide.lt-md="true" class="toolbar-items">
+            <button class="more-btn" mat-fab color = "accent" [matMenuTriggerFor]="moreopts">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #moreopts="matMenu">
+                <a mat-menu-item routerLink='usersettings'>Archive</a>
+                <a mat-menu-item routerLink=''>Block/Unblock</a>
+            </mat-menu>
+        </div>
+    </div>
+
+    <div class="chatbox"> <!-- Because CSS this part is reveresed-->
+        &nbsp;
+        <app-chat-message [isRight]="true"></app-chat-message>
+        <app-chat-message [isRight]="true"></app-chat-message>
+        <app-chat-message [isRight]="false"></app-chat-message>
+        <app-chat-message [isRight]="true"></app-chat-message>
+        <app-chat-message [isRight]="false"></app-chat-message>
+        <app-chat-message [isRight]="true"></app-chat-message>
+    </div>
+
+    <div class="bottom">
+        <mat-form-field class="messagebox" appearance="fill">
+            <mat-label>Message</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+        <button mat-fab><mat-icon>send</mat-icon></button>
+
+        <div class="offerbox" *ngIf="false; else ownerElse">
+            <mat-form-field appearance="fill">
+                <mat-label>Offer</mat-label>
+                <input matInput type="number">
+            </mat-form-field>
+            <button mat-fab>
+                <mat-icon>local_offer</mat-icon>
+            </button>
+        </div>
+        <ng-template #ownerElse>
+            <div class="offerbox" >
+                <p> Current offer: 25000</p>
+                <button mat-fab>
+                    <mat-icon>check</mat-icon>
+                </button>
+                <button mat-fab color="warn">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </ng-template>
+    <div>
+</div>

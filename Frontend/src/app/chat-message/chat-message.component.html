@@ -1,0 +1,23 @@
+<div *ngIf="isRight; else chatMessageElse">
+<mat-card class="right">
+ <mat-card-header>
+    <mat-card-title>You</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Lorem ipsum stuff</p>
+  </mat-card-content>
+  <mat-card-footer>June 26 11:10AM</mat-card-footer>
+
+</mat-card>
+</div>
+<ng-template #chatMessageElse>
+<mat-card class="left">
+ <mat-card-header>
+    <mat-card-title>Owner/Customer</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Lorem ipsum stuff</p>
+  </mat-card-content>
+  <mat-card-footer>June 26 11:10AM</mat-card-footer>
+</mat-card>
+</ng-template>

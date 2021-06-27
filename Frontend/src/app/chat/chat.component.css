@@ -1,0 +1,62 @@
+.wrapper{
+  height: 100%;
+}
+.top {
+  display: flex;
+  border-bottom: 3px solid white;
+  height: 75px;
+  padding-left: 50px;
+}
+
+.top p {
+  font-size: 30px;
+  width: 95%
+}
+
+.top .more-btn {
+  font-size: 30px;
+  float: right;
+  align-self: right;
+  margin-top: 10px;
+}
+
+.chatbox {
+  height: 60vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.bottom {
+  height: 150px;
+  border-top: 3px white solid;
+  display: flex;
+}
+
+.messagebox {
+  width: 60%;
+  height: 100%;
+}
+
+.offerbox {
+  width: 25%;
+  margin-left: 24px;
+  display: flex;
+}
+
+.offerbox p{
+  margin-right: 25px;
+}
+
+.offerbox mat-form-field{
+  width: 100%;
+}
+
+.offerbox mat-form-field textarea {
+  height: 150px;
+}
+
+.messagebox input{
+  width: 25%;
+  height: 100px;
+}

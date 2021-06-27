@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { MyEstatesComponent } from './my-estates/my-estates.component';
 import { NewEstateComponent } from './new-estate/new-estate.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,11 @@ const routes: Routes = [
   {
     path: 'usersettings', component: UserSettingsComponent,
     data: { breadcrumb: 'Settings' },
+    canActivate: []
+  },
+  {
+    path: 'chat', component: ChatComponent,
+    data: { breadcrumb: 'Chat' },
     canActivate: []
   },
 ];
