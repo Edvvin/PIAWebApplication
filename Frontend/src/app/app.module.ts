@@ -20,6 +20,8 @@ import { ApproveEstatesComponent } from './approve-estates/approve-estates.compo
 import { UserManipulationComponent } from './user-manipulation/user-manipulation.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
+import { FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { ChatMessageComponent } from './chat-message/chat-message.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

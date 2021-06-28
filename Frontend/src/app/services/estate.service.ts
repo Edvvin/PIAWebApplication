@@ -5,7 +5,7 @@ import {backendUri} from '../globals';
 @Injectable({
   providedIn: 'root'
 })
-export class EstateServiceService {
+export class EstateService {
 
   constructor(private http:HttpClient) { }
 

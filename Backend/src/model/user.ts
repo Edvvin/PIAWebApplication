@@ -7,6 +7,9 @@ let User = new Schema({
     name: {
         type: String,
     },
+    surname: {
+        type: String,
+    },
     username: {
         type: String,
     },
@@ -27,7 +30,10 @@ let User = new Schema({
     },
     isVerified : {
         type: Boolean,
-    }
+    },
+    image: {
+        type: String,
+    },
 
 });
 

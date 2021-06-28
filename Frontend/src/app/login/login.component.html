@@ -6,28 +6,28 @@
         <div flex>
             <mat-form-field appearance="fill">
                 <mat-label>Username</mat-label>
-                <input matInput>
+                <input matInput [(ngModel)]='username'>
             </mat-form-field>
         </div>
         <br>
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>Password</mat-label>
-                <input matInput type="password">
+                <input matInput type="password" [(ngModel)]='password'>
             </mat-form-field>
         </div>
         <div>
-            <button mat-raised-button color="accent">Login</button>
+            <button mat-raised-button color="accent" (click)='login()'>Login</button>
         </div>
         <br>
-        <div flex *ngIf="true" class="validation">
+        <div flex *ngIf="loginError" class="validation">
             <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Log in failed
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <p>I'm visible because I am open</p>
+            <p>{{loginErrorMessage}}</p>
             </mat-expansion-panel>
         </div>
         </div>

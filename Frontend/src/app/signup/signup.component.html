@@ -5,37 +5,36 @@
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
-            <input matInput>
+            <input matInput required [(ngModel)]='name'>
+            <mat-hint class='error-msg'>{{nameErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Surname</mat-label>
-            <input matInput>
+            <input matInput required [(ngModel)]='surname'>
+            <mat-hint class='error-msg'>{{surnameErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Username</mat-label>
-            <input matInput>
+            <input matInput required [(ngModel)]='username'>
+            <mat-hint class='error-msg'>{{username}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Password</mat-label>
-            <input matInput type="password">
+            <input matInput required type="password" [(ngModel)]='password'>
+            <mat-hint class='error-msg'>{{passwordErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Confirm Password</mat-label>
-            <input matInput type="password">
-        </mat-form-field>
-    </div>
-    <div flex>
-        <mat-form-field appearance="fill">
-            <mat-label>Confirm Password</mat-label>
-            <input matInput>
+            <input matInput required type="password" [(ngModel)]='confirmPass'>
+            <mat-hint class='error-msg'>{{confirmPassErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
@@ -48,22 +47,24 @@
             <button mat-fab matSuffix (click)="fileInput.click()">
                 <mat-icon>attach_file</mat-icon>
             </button>
-            <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+            <input hidden (change)="selectFile($event)" #fileInput type="file" id="file" accept="image/x-png,image/jpeg">
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Country</mat-label>
-            <input matInput>
+            <input matInput  required [(ngModel)]='country'>
+            <mat-hint class='error-msg'>{{countryErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>City/Town</mat-label>
-            <input matInput>
+            <input matInput required [(ngModel)]='city'>
+            <mat-hint class='error-msg'>{{cityErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
-        <button mat-raised-button color="accent">Submit</button>
+        <button mat-raised-button color="accent" (click)='signup()'>Submit</button>
     </div>
 </div>

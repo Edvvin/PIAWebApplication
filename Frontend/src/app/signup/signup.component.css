@@ -23,3 +23,7 @@
 .hidden{
     visibility: hidden;
 }
+
+.error-msg {
+    color: red;
+}

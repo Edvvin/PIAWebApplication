@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http"
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import User from '../data/user';
 import {backendUri} from '../globals';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceService {
+export class UserService {
 
   constructor(private http:HttpClient) { }
 
@@ -23,10 +23,6 @@ export class UserServiceService {
     };
 
     return this.http.post(`${this.uri}/login`, data);
-  }
-
-  logout() {
-    localStorage.removeItem('user');
   }
 
   verifyUser(username: string) {
@@ -61,4 +57,15 @@ export class UserServiceService {
     return this.http.post(`${this.uri}/changepass`, data);
   }
 
+  upload(formData : FormData){
+    return this.http.post(`${this.uri}/upload`, formData);
+  }
+
+  setImage(username: string, image: any) {
+    let data = {
+      username: username,
+      img: image
+    }
+    return this.http.post(`${this.uri}/setimage`, data);
+  }
 }
