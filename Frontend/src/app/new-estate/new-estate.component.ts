@@ -8,15 +8,27 @@ import { Component, OnInit } from '@angular/core';
 export class NewEstateComponent implements OnInit {
 
   constructor() { }
-  
-  selectedFiles : object;
+
+  selectedFiles = [];
+
+  fileSelectErrMsg: string;
 
   ngOnInit(): void {
   }
 
   selectFile(event) {
-    this.selectedFiles = event.target.files;
-    console.log(typeof(event.target.files));
+    let temp = event.target.files;
+    if (temp.length > 0) {
+      this.selectedFiles.push(temp);
+    }
+    console.log(this.selectedFiles);
+  }
+
+  removeFile(f) {
+    var index = this.selectedFiles.indexOf(f);
+    if (index > -1) {
+      this.selectedFiles.splice(index, 1);
+    }
   }
 
 }

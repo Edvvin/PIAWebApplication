@@ -57,17 +57,24 @@
             <mat-radio-button value="notfurnished">Not furnished</mat-radio-button>
         </mat-radio-group>
     </div>
+    <div flex *ngFor="let f of selectedFiles; let i = index;">
+        <mat-form-field class="columns">
+            <mat-label>{{f.item(0).name}}</mat-label>
+            <input matInput disabled>
+            <button mat-fab matSuffix (click)="removeFile(f)" color="warn">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
     <div flex>
-        <mat-form-field class="columns"> <!-- TODO -->
-            <mat-label *ngIf="selectedFiles; else newFile">{{selectedFiles.item(0).name}}</mat-label>
-            <ng-template #newFile>
-                <mat-label>Choose file</mat-label>
-            </ng-template>
+        <mat-form-field class="columns">
+            <mat-label>Choose file</mat-label>
             <input matInput disabled>
             <button mat-fab matSuffix (click)="fileInput.click()">
                 <mat-icon>attach_file</mat-icon>
             </button>
-            <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+            <input hidden (change)="selectFile($event)" #fileInput type="file" id="file" accept="image/x-png,image/jpeg">
+            <mat-hint class='error-msg'>{{fileSelectErrMsg}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>

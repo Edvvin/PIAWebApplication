@@ -39,6 +39,9 @@ let Estate = new Schema({
     price: {
         type: Number,
     },
+    isPromoted: {
+        type: Boolean,
+    },
     chats: {
         type: [{
             username: {

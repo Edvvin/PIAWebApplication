@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
     },
 });
 
-var upload=multer({storage:storage})
+var upload=multer({storage:storage});
 
 router.route('/login').post((req, res) =>{
     let username=req.body.username;
@@ -153,6 +153,9 @@ router.route('/setimage').post((req, res) => {
             }
         }
     });
+});
+
+router.route('/search').post((req, res) => {
 });
 
 app.get('/', (req, res) => res.send('Hello World!'));

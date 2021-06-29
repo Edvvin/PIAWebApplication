@@ -30,6 +30,10 @@
     visibility: hidden;
 }
 
+.error-msg {
+    color: red;
+}
+
 mat-radio-group {
     padding: 20px;
 }
