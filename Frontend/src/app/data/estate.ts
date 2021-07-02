@@ -1,4 +1,5 @@
 export class Estate{
+    _id: string;
     description : string;
     country : string;
     city : string;
@@ -12,7 +13,11 @@ export class Estate{
     isForSale : boolean;
     price : number;
     owner: string;
+    agency: string;
+    ownedByAgency: boolean;
+    isPromoted: boolean;
     chats: Chat[];
+    images: string[];
 }
 
 export class Chat {

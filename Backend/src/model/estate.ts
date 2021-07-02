@@ -39,6 +39,15 @@ let Estate = new Schema({
     price: {
         type: Number,
     },
+    owner: {
+        type: String,
+    },
+    agency: {
+        type: String,
+    },
+    ownedByAgency: {
+        type: Boolean,
+    },
     isPromoted: {
         type: Boolean,
     },
@@ -65,6 +74,9 @@ let Estate = new Schema({
             },
         }],
     },
+    images: {
+        type: [String],
+    }
 });
 
 export default mongoose.model('Estate', Estate, 'estates');

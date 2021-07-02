@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import user from './model/user';
+import estate from './model/estate';
 
 const app = express();
 
@@ -147,6 +148,24 @@ router.route('/setimage').post((req, res) => {
         } else {
             if (usr) {
                 user.collection.updateOne({ username: username }, { $set: { image: img } });
+                res.json({ status: 'OK' });
+            } else {
+                res.status(400).json({ status: 'FAIL' });
+            }
+        }
+    });
+});
+
+router.route('/setestateimage').post((req, res) => {
+    let id = req.body.id;
+    let img = req.body.img;
+    estate.findOne({ _id: id }, (err, est) => {
+        if (err) {
+            console.log(err);
+            res.status(400).json({ 'status': 'FAIL' });
+        } else {
+            if (est) {
+                estate.collection.updateOne({ _id: id }, { $push: { images: img} });
                 res.json({ status: 'OK' });
             } else {
                 res.status(400).json({ status: 'FAIL' });

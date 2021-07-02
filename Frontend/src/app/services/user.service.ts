@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import User from '../data/user';
+import { User } from '../data/user';
 import {backendUri} from '../globals';
 
 @Injectable({

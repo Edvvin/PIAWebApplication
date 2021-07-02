@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import User from '../data/user';
+import { User } from '../data/user';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -54,28 +54,28 @@ export class SignupComponent implements OnInit {
       this.nameErr = 'user cannot be called admin';
       isBad = true;
     }
-    if(this.name===undefined || this.surname.length === 0){
+    if(this.surname===undefined || this.surname.length === 0){
       this.surnameErr = 'Surname is required';
       isBad = true;
     }
     else{
       this.surnameErr = '';
     }
-    if(this.name===undefined || this.username.length === 0){
+    if(this.username===undefined || this.username.length === 0){
       this.usernameErr = 'username is required';
       isBad = true;
     }
     else{
       this.usernameErr = '';
     }
-    if(this.name===undefined || this.city.length === 0){
+    if(this.city===undefined || this.city.length === 0){
       this.cityErr = 'City is required';
       isBad = true;
     }
     else{
       this.cityErr = '';
     }
-    if(this.name===undefined || this.country.length === 0){
+    if(this.country===undefined || this.country.length === 0){
       this.countryErr = 'country is required';
       isBad = true;
     }
