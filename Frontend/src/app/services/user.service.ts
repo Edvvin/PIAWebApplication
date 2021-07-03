@@ -61,6 +61,17 @@ export class UserService {
     return this.http.post(`${this.uri}/upload`, formData);
   }
 
+  download(file: string) {
+    var body = {
+      filename: file
+    };
+
+    return this.http.post(`${this.uri}/download`, body, {
+      responseType: 'blob',
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
+  }
+
   setImage(username: string, image: any) {
     let data = {
       username: username,

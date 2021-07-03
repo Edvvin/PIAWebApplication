@@ -2,7 +2,8 @@
     <div class="card-header">
         <h3>{{estate.owner}}</h3>
     </div>
-    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <img *ngIf="estate.images.length > 0" [src]="imgUrl" alt="Photo of a Shiba Inu">
+    <img *ngIf="estate.images.length === 0" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
     <div class="container">
         <div class = "info-line">Address: {{estate.address}}</div>
         <br>

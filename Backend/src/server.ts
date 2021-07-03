@@ -5,6 +5,7 @@ import multer from 'multer';
 import mongoose, { Schema, Types } from 'mongoose';
 import user from './model/user';
 import estate from './model/estate';
+import path from 'path';
 
 const app = express();
 
@@ -151,6 +152,11 @@ router.route('/upload').post(upload.single('file'), (req: any, res, next) => {
         return next(error);
     }
     res.send(file);
+});
+
+router.route('/download').post((req, res, next)=>{
+    var filepath = path.join(__dirname,'../upload' + '/' + req.body.filename);
+    res.sendFile(filepath);
 });
 
 router.route('/setimage').post((req, res) => {
