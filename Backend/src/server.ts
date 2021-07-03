@@ -210,13 +210,20 @@ router.route('/addestate').post((req, res) => {
 });
 
 router.route('/search').post((req, res) => {
-    estate.find({isVerified: true, city: req.body.city, price: {$gt: req.body.lower, $lt: req.body.upper}},
-        (err, est) => {
+    let searchObj: any = {
+        price: {$gt: req.body.lower, $lt: req.body.upper},
+    };
+
+    if (req.body.city !== '') {
+        searchObj.city = req.body.city;
+    }
+
+    estate.find(searchObj, (err, est) => {
         if (err) {
             console.log(err);
             let data = {
                 status: "FAIL",
-                message: "Fail to search",
+                message: "Failed to search",
             }
         } else {
             let data = {
@@ -224,7 +231,7 @@ router.route('/search').post((req, res) => {
                 message: "Successfully searched",
                 estates: est,
             }
-           res.json(data);
+            res.json(data);
         }
     });
 });

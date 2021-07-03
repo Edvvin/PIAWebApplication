@@ -94,7 +94,7 @@ export class NewEstateComponent implements OnInit {
       this.addressErr = '';
     }
 
-    if(this.area===undefined){
+    if(this.area===undefined || this.area === null){
       this.areaErr = 'Area is required';
       isBad = true;
     }
@@ -102,7 +102,7 @@ export class NewEstateComponent implements OnInit {
       this.areaErr = '';
     }
 
-    if(this.price===undefined){
+    if(this.price===undefined || this.price === null){
       this.priceErr = 'Price is required';
       isBad = true;
     }
@@ -110,7 +110,7 @@ export class NewEstateComponent implements OnInit {
       this.priceErr = '';
     }
 
-    if(this.numOfFloors===undefined){
+    if(this.numOfFloors===undefined || this.numOfFloors === null){
       this.numOfFloorsErr = 'Required';
       isBad = true;
     }
@@ -118,7 +118,7 @@ export class NewEstateComponent implements OnInit {
       this.numOfFloorsErr = '';
     }
 
-    if(this.numOfRooms===undefined){
+    if(this.numOfRooms===undefined || this.numOfRooms === null){
       this.numOfRoomsErr = 'Required';
       isBad = true;
     }

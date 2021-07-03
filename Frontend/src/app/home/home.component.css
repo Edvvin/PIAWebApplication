@@ -16,3 +16,13 @@
 .error-msg{
     color: red;
 }
+
+.search-results {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.search-result{
+    width: 300px;
+}

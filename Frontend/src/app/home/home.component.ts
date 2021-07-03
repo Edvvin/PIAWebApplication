@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
       tempC = this.city;
     }
 
-    if(this.lower === undefined){
+    if(this.lower === undefined || this.lower === null){
       tempL = 0;
       numOfBad++;
     }
@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
       tempL = this.lower;
     }
 
-    if(this.upper === undefined){
+    if(this.upper === undefined || this.upper === null){
       tempU = Number.MAX_VALUE;
       numOfBad++;
     }
@@ -72,10 +72,12 @@ export class HomeComponent implements OnInit {
     else{
       this.lowerErr = this.upperErr = '';
     }
-
     this.estateService.estateSearch(tempC, tempL, tempU).subscribe((res: any) => {
-      if(res.status === "OK"){
+      if(res.status === "OK") {
         this.searchResults = res.estates;
+        console.log(this.searchResults);
+      }
+      else{
       }
     });
   }
