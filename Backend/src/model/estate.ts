@@ -3,25 +3,25 @@ import mongoose, { SchemaTypes } from 'mongoose';
 const Schema = mongoose.Schema;
 
 let Estate = new Schema({
-    _id: {
-        type: SchemaTypes.ObjectId,
-    },
     description: {
-        type: String,
-    },
-    city: {
         type: String,
     },
     country: {
         type: String,
     },
+    city: {
+        type: String,
+    },
     address: {
         type: String,
     },
-    floorOfAparment: {
-        type: Number,
+    isHouse: {
+        type: Boolean,
     },
     numberOfFloors: {
+        type: Number,
+    },
+    floorOfAparment: {
         type: Number,
     },
     area: {

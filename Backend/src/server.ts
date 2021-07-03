@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import multer from 'multer';
-import mongoose from 'mongoose';
+import mongoose, { Schema, Types } from 'mongoose';
 import user from './model/user';
 import estate from './model/estate';
 
@@ -35,21 +35,33 @@ router.route('/login').post((req, res) =>{
     let username=req.body.username;
     let password=req.body.password;
 
-    user.findOne({'username':username, 'password': password}, (err,usr) => {
+    user.findOne({'username':username}, (err,usr: any) => {
         if(err){
             console.log(err);
-            let data = {
-                status: "FAIL",
-                message: "Cannot find user " + username,
-            };
-            res.json(data);
         } else {
-            let data = {
-                user: usr,
-                status: "OK",
-                message: "Log in successful.",
-            };
-            res.json(data);
+            if (usr) {
+                if(usr.password === password){
+                    let data = {
+                        user: usr,
+                        status: "OK",
+                        message: "Log in successful.",
+                    };
+                    res.json(data);
+                } else{
+                    let data = {
+                        user: usr,
+                        status: "FAIL",
+                        message: "Password wrong",
+                    };
+                    res.json(data);
+                }
+            } else {
+                let data = {
+                    status: "FAIL",
+                    message: "Cannot find user " + username,
+                };
+                res.json(data);
+            }
         }
     });
 });
@@ -57,8 +69,11 @@ router.route('/login').post((req, res) =>{
 router.route('/register').post((req, res) =>{
     let u : any = new user(req.body);
     user.findOne({'username':u.username}, (err,usr) => {
-        if(!err){
+        if(err){
             console.log(err);
+            return;
+        }
+        if(usr){
             let data = {
                 status: "FAIL",
                 message: "Username: " + u.username + " already exists",
@@ -107,8 +122,7 @@ router.route('/unverified').get((req, res) =>{
         } else {
            res.json(u);
         }
-    });
-});
+    }); });
 
 router.route('/allusers').get((req, res) =>{
     user.find({}, (err, u) =>{
@@ -131,6 +145,7 @@ router.route('/changepass').post((req, res) =>{
 
 router.route('/upload').post(upload.single('file'), (req: any, res, next) => {
     const file = req.file;
+    console.log(file);
     if( !file ) {
         const error = new Error('No file given');
         return next(error);
@@ -159,13 +174,13 @@ router.route('/setimage').post((req, res) => {
 router.route('/setestateimage').post((req, res) => {
     let id = req.body.id;
     let img = req.body.img;
-    estate.findOne({ _id: id }, (err, est) => {
+    estate.findById(id, (err, est) => {
         if (err) {
             console.log(err);
             res.status(400).json({ 'status': 'FAIL' });
         } else {
             if (est) {
-                estate.collection.updateOne({ _id: id }, { $push: { images: img} });
+                estate.findByIdAndUpdate(id, { $push: { images: img} }, (err, res1) => {});
                 res.json({ status: 'OK' });
             } else {
                 res.status(400).json({ status: 'FAIL' });
@@ -174,8 +189,46 @@ router.route('/setestateimage').post((req, res) => {
     });
 });
 
-router.route('/search').post((req, res) => {
+router.route('/addestate').post((req, res) => {
+    let e = new estate(req.body);
+    e.save().then((est) => {
+        let data = {
+            status: "OK",
+            estateid: est._id,
+            message: "Estate added",
+        };
+        res.json(data);
+    }).catch((err) => {
+        console.log(err);
+        let data = {
+            status: "FAIL",
+            estateid: "",
+            message: "Failed to register",
+        };
+        res.status(400).json(data);
+    });
 });
 
-app.get('/', (req, res) => res.send('Hello World!'));
+router.route('/search').post((req, res) => {
+    estate.find({isVerified: true, city: req.body.city, price: {$gt: req.body.lower, $lt: req.body.upper}},
+        (err, est) => {
+        if (err) {
+            console.log(err);
+            let data = {
+                status: "FAIL",
+                message: "Fail to search",
+            }
+        } else {
+            let data = {
+                status: "OK",
+                message: "Successfully searched",
+                estates: est,
+            }
+           res.json(data);
+        }
+    });
+});
+
+//app.get('/', (req, res) => res.send('Hello World!'));
+app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));

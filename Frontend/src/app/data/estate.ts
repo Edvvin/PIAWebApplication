@@ -1,5 +1,4 @@
 export class Estate{
-    _id: string;
     description : string;
     country : string;
     city : string;

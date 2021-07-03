@@ -1,3 +1,3 @@
 
 export
-const backendUri = "localhost:4000";
+const backendUri = "http://localhost:4000";

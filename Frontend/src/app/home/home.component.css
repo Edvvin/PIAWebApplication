@@ -1,0 +1,18 @@
+.search-bar {
+    margin:auto;
+    width: 80vw;
+    justify-content: center;
+    display: flex;
+}
+
+.search-bar mat-form-field{
+    padding: 10px;
+}
+
+.search-bar button {
+    padding: 10px;
+}
+
+.error-msg{
+    color: red;
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../data/user';
 import { UserService } from '../services/user.service';
 
@@ -9,7 +10,7 @@ import { UserService } from '../services/user.service';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,24})/;
   name: string;
@@ -118,9 +119,9 @@ export class SignupComponent implements OnInit {
       } else {
         if (this.selectedFiles != null) {
           const formData = new FormData();
-          formData.append('file', this.selectedFiles);
+          formData.append('file', this.selectedFiles[0]);
           this.userService.upload(formData).subscribe((res: any) => {
-            console.log(res);
+            console.log("TESTTESTTEST");
             this.userService.setImage(this.username, res.filename).subscribe((rep: any) => {
               if (rep.status !== 'OK') {
                 alert('image not set');
@@ -130,6 +131,7 @@ export class SignupComponent implements OnInit {
             (err) => console.log(err)
           );
         }
+        this.router.navigate(['/login']);
       }
     });
 

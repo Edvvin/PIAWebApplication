@@ -78,7 +78,7 @@ export class NewEstateComponent implements OnInit {
       this.countryErr = '';
     }
 
-    if(this.city===undefined || this.city.length === 0){
+    if(this.city === undefined || this.city.length === 0){
       this.cityErr = 'City is required';
       isBad = true;
     }
@@ -152,7 +152,7 @@ export class NewEstateComponent implements OnInit {
     estate.isForSale = this.isForSale;
     estate.price = this.price;
     estate.isPromoted = false;
-    
+
     let user: User = JSON.parse(localStorage.getItem('user'));
 
     if(user.userType === 'agent'){
@@ -173,10 +173,11 @@ export class NewEstateComponent implements OnInit {
       } else {
         this.selectedFiles.forEach((f) => {
           const formData = new FormData();
-          formData.append('file', f);
+          formData.append('file', f[0]);
+          let estid = res.estateid;
           this.userService.upload(formData).subscribe((res: any) => {
             console.log(res);
-            this.estateService.addImage(estate._id, res.filename).subscribe((rep: any) => {
+            this.estateService.addImage(estid, res.filename).subscribe((rep: any) => {
               if (rep.status !== 'OK') {
                 alert('image not set');
               }

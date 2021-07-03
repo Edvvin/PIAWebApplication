@@ -32,7 +32,7 @@
                 </button>
                 <mat-menu #menu_example="matMenu">
                     <a mat-menu-item routerLink='usersettings' >Account settings</a>
-                    <a mat-menu-item routerLink='' >Log out</a>
+                    <a mat-menu-item (click)="logout()">Log out</a>
                 </mat-menu>
                 <button mat-button routerLink='inbox'>Inbox</button>
                 <button mat-button routerLink='login'>Log in</button>

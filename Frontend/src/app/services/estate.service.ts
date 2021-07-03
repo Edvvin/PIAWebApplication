@@ -21,7 +21,7 @@ export class EstateService {
     return this.http.post(`${this.uri}/setestateimage`, data);
   }
 
-  addEstate(es: Estate){
+  addEstate(es: Estate) {
     return this.http.post(`${this.uri}/addestate`, es);
   }
 
@@ -33,7 +33,7 @@ export class EstateService {
     let data = {
       city: city,
       lower: lower,
-      upper: upper
+      upper: upper,
     };
 
     return this.http.post(`${this.uri}/search`, data);
@@ -48,7 +48,7 @@ export class EstateService {
     return this.http.post(`${this.uri}/verifyestate`, data);
   }
 
-  sendMessageToOwner(estateId:string, fromUsername: string){
+  sendMessageToOwner(estateId: string, fromUsername: string){
     let data = {
       estateId: estateId,
       fromUsername: fromUsername
