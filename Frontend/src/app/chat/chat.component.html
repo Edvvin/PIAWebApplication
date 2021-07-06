@@ -1,53 +1,70 @@
-<div class="wrapper">
-    <div class="top">
-        <p class="owner">Welcome,  more words lol fdafdsaf dasfasf 43243</p>
-        <div fxShow="true" fxHide.lt-md="true" class="toolbar-items">
-            <button class="more-btn" mat-fab color = "accent" [matMenuTriggerFor]="moreopts">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #moreopts="matMenu">
-                <a mat-menu-item routerLink='usersettings'>Archive</a>
-                <a mat-menu-item routerLink=''>Block/Unblock</a>
-            </mat-menu>
-        </div>
-    </div>
-
-    <div class="chatbox"> <!-- Because CSS this part is reveresed-->
-        &nbsp;
-        <app-chat-message [isRight]="true"></app-chat-message>
-        <app-chat-message [isRight]="true"></app-chat-message>
-        <app-chat-message [isRight]="false"></app-chat-message>
-        <app-chat-message [isRight]="true"></app-chat-message>
-        <app-chat-message [isRight]="false"></app-chat-message>
-        <app-chat-message [isRight]="true"></app-chat-message>
-    </div>
-
-    <div class="bottom">
-        <mat-form-field class="messagebox" appearance="fill">
-            <mat-label>Message</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-        <button mat-fab><mat-icon>send</mat-icon></button>
-
-        <div class="offerbox" *ngIf="false; else ownerElse">
-            <mat-form-field appearance="fill">
-                <mat-label>Offer</mat-label>
-                <input matInput type="number">
-            </mat-form-field>
-            <button mat-fab>
-                <mat-icon>local_offer</mat-icon>
-            </button>
-        </div>
-        <ng-template #ownerElse>
-            <div class="offerbox" >
-                <p> Current offer: 25000</p>
-                <button mat-fab>
-                    <mat-icon>check</mat-icon>
+<div *ngIf="isLoaded">
+    <div class="wrapper">
+        <div class="top">
+            <p class="owner">{{estate.name}}</p>
+            <div fxShow="true" fxHide.lt-md="true" class="toolbar-items">
+                <button class="more-btn" mat-fab color="accent" [matMenuTriggerFor]="moreopts">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <button mat-fab color="warn">
-                    <mat-icon>close</mat-icon>
-                </button>
+                <mat-menu #moreopts="matMenu">
+                    <a mat-menu-item routerLink='usersettings'>Archive</a>
+                    <a mat-menu-item routerLink=''>Block/Unblock</a>
+                </mat-menu>
             </div>
-        </ng-template>
-    <div>
-</div>
+        </div>
+
+        <div class="chatbox">
+            <!-- Because CSS this part is reveresed-->
+            &nbsp;
+            <div *ngFor="let m of chat.messages">
+                <app-chat-message [isAgency]="estate.ownedByAgency" [isOwner]="isOwner" [message]="m"></app-chat-message>
+            </div>
+        </div>
+
+        <div class="bottom">
+            <mat-form-field class="messagebox" appearance="fill">
+                <mat-label>Message</mat-label>
+                <textarea matInput [(ngModel)]="msgText"></textarea>
+            </mat-form-field>
+            <button mat-fab (click)="sendMessageClick()">
+                <mat-icon>send</mat-icon>
+            </button>
+            <div *ngIf="!estate.sold" class="sold">
+                <div class="offerbox" *ngIf="!isOwner; else ownerElse">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Offer</mat-label>
+                        <input matInput type="number" [(ngModel)]="offer">
+                        <mat-hint>Current offer: {{currentOffer}}</mat-hint>
+                    </mat-form-field>
+                    <button mat-fab (click)="sendOfferClick()">
+                        <mat-icon>local_offer</mat-icon>
+                    </button>
+                    <div class="offer">
+                        <mat-form-field appearance="fill">
+                            <mat-date-range-input [rangePicker]="picker" [dateFilter]="dateFilter" #rangeInput>
+                                <input matStartDate placeholder="Start date" [(ngModel)]="dateFrom" (dateInput)="firstDateChosen()">
+                                <input matEndDate placeholder="End date" [(ngModel)]="dateTo" (dateInput)="secondDateChosen(false)">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>
+                    </div>
+                    <button *ngIf="!estate.isForSale" mat-fab (click)="picker.open()" [color]="btnerr">
+                        <mat-icon>calendar_today</mat-icon>
+                    </button>
+                </div>
+                <ng-template #ownerElse>
+                    <div class="offerbox" *ngIf="currentOffer">
+                        <p> Current offer: {{currentOffer}}</p>
+                        <button mat-fab (click)="acceptOffer()">
+                            <mat-icon>check</mat-icon>
+                        </button>
+                        <button mat-fab (click)="declineOffer()" color="warn">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </ng-template>
+            </div>
+            <div>
+            </div>
+        </div>

@@ -22,6 +22,8 @@ import { ChatComponent } from './chat/chat.component';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { EstatePageComponent } from './estate-page/estate-page.component';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import {HttpClientModule} from '@angular/common/http';
     ApproveEstatesComponent,
     UserManipulationComponent,
     ChatComponent,
-    ChatMessageComponent
+    ChatMessageComponent,
+    EstatePageComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import {HttpClientModule} from '@angular/common/http';
     BreadcrumbModule,
     FormsModule,
     HttpClientModule,
+    IvyCarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

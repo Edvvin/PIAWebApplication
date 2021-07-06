@@ -7,6 +7,7 @@ import { MyEstatesComponent } from './my-estates/my-estates.component';
 import { NewEstateComponent } from './new-estate/new-estate.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { ChatComponent } from './chat/chat.component';
+import { EstatePageComponent } from './estate-page/estate-page.component';
 
 
 const routes: Routes = [
@@ -46,8 +47,18 @@ const routes: Routes = [
     canActivate: []
   },
   {
-    path: 'chat', component: ChatComponent,
+    path: 'chat/:id/:usr', component: ChatComponent,
     data: { breadcrumb: 'Chat' },
+    canActivate: []
+  },
+  {
+    path: 'chat/:id', component: ChatComponent,
+    data: { breadcrumb: 'Chat' },
+    canActivate: []
+  },
+  {
+    path: 'estate/:id', component: EstatePageComponent,
+    data: { breadcrumb: 'Estate' },
     canActivate: []
   },
 ];

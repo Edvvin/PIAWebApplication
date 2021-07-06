@@ -1,13 +1,15 @@
-<div class="card">
+<div class="card" (click)="openCard()">
     <div class="card-header">
         <h3>{{estate.owner}}</h3>
     </div>
-    <img *ngIf="estate.images.length > 0" [src]="imgUrl" alt="Photo of a Shiba Inu">
+    <img *ngIf="estate.images.length > 0" [src]="imgUrl" alt="Photo of estate">
     <img *ngIf="estate.images.length === 0" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
     <div class="container">
-        <div class = "info-line">Address: {{estate.address}}</div>
+        <div class = "info-line">City: {{estate.address}}</div>
         <br>
         <div class = "info-line">Type: {{estate.isHouse?"House":"Flat"}}</div>
+        <br>
+        <div class = "info-line">Price: {{estate.price}}</div>
         <br>
         <div class = "info-line">Rooms: <mat-icon *ngFor="let room of rooms">bed</mat-icon></div>
         <br>

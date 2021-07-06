@@ -237,8 +237,275 @@ router.route('/search').post((req, res) => {
                 message: "Successfully searched",
                 estates: est,
             }
+            console.log(est);
             res.json(data);
         }
+    });
+});
+
+router.route('/getestate').post((req, res) => {
+    let id = req.body.id;
+    estate.findById(id, (err, est) => {
+        if (err) {
+            console.log(err);
+        } else {
+            let data = {
+                status: "OK",
+                message: "Estate retrieved",
+                estate: est,
+            }
+            res.json(data);
+        }
+    });
+});
+
+router.route('/sellestate').post((req, res) => {
+    let id = req.body.id;
+    estate.findByIdAndUpdate(id, { $set: {sold: true} },
+        (err, res1) => {
+            if (err) {
+                let data = {
+                    status: 'FAIL',
+                    message: 'Failed to accept the offer',
+                };
+                res.json(data);
+            } else {
+                let data = {
+                    status: 'OK',
+                    message: 'Success',
+                };
+                res.json(data);
+            }
+        });
+});
+
+router.route('/sendtoowner').post((req, res) => {
+    let id = req.body.id;
+    let fromUser = req.body.fromUser;
+    let message = req.body.message;
+
+    estate.findById(id,
+        (err, res1: any) => {
+            if (err) {
+                let data = {
+                    status: 'FAIL',
+                    message: 'Failed to accept the offer',
+                };
+                res.json(data);
+            } else {
+                res1.chats.find((c: any) => (c.username === fromUser)).messages.push(
+                    { text: message, fromClient: true, sender: fromUser });
+                res1.save().then((x: any) => {
+                    let data = {
+                        status: 'OK',
+                        message: 'Success',
+                    };
+                    res.json(data);
+                }).catch((err: any) =>{
+                    let data = {
+                        status: 'FAIL',
+                        message: 'Failed to send message to owner',
+                    };
+                    res.json(data);
+                });
+            }
+        });
+});
+
+router.route('/sendtoclient').post((req, res) => {
+    let id = req.body.id;
+    let fromUser = req.body.fromUser;
+    let toUser = req.body.toUser;
+    let message = req.body.message;
+
+    estate.findById(id,
+        (err, res1: any) => {
+            if (err) {
+                let data = {
+                    status: 'FAIL',
+                    message: 'Failed to accept the offer',
+                };
+                res.json(data);
+            } else {
+                res1.chats.find((c: any) => (c.username === toUser)).messages.push(
+                    { text: message, fromClient: true, sender: fromUser });
+                res1.save().then((x: any) => {
+                    let data = {
+                        status: 'OK',
+                        message: 'Success',
+                    };
+                    res.json(data);
+                }).catch((err: any) =>{
+                    let data = {
+                        status: 'FAIL',
+                        message: 'Failed to send message to owner',
+                    };
+                    res.json(data);
+                });
+            }
+        });
+});
+
+router.route('/newchat').post((req, res) => {
+    let username = req.body.username;
+    let id = req.body.id;
+    estate.findByIdAndUpdate(id, { $push: { chats: { username: username, isArchived: false, messages: [] } } },
+        (err, res1) => {
+            if (err) {
+                let data = {
+                    status: 'FAIL',
+                    message: 'Failed to accept the offer',
+                };
+                res.json(data);
+            } else {
+                let data = {
+                    status: 'OK',
+                    message: 'Success',
+                };
+                res.json(data);
+            }
+        });
+});
+
+router.route('/sendoffer').post((req, res) => {
+    let id = req.body.id;
+    let username = req.body.username;
+    let fromDate = req.body.dateFrom;
+    let toDate = req.body.dateTo;
+    let offer = req.body.offer;
+
+    estate.findById(id, (err, est: any) => {
+        if(err){
+            let data = {
+                status: 'FAIL',
+                message: 'Failed to send offer',
+            };
+            res.json(data);
+        }
+        if (est) {
+            let c = est.chats.find((chat: any) => (chat.username === username));
+            if (c) {
+                c.offer = {
+                    price: offer,
+                    fromDate: fromDate,
+                    toDate: toDate,
+                };
+                est.save().then((x: any) => {
+                    let data = {
+                        status: 'OK',
+                        message: 'Success',
+                    };
+                    res.json(data);
+                }).catch((err: any) => {
+                    console.log(err);
+                    let data = {
+                        status: 'FAIL',
+                        message: 'Failed to send offer',
+                    };
+                    res.json(data);
+                });
+            }
+        } else {
+        let data = {
+            status: 'FAIL',
+            message: 'Failed to send offer',
+        };
+        console.log("fail");
+        res.json(data);
+    }
+    });
+});
+
+router.route('/acceptoffer').post((req, res) => {
+    let id = req.body.id;
+    let username = req.body.username;
+
+    estate.findById(id, (err, est: any) => {
+        if(err){
+            let data = {
+                status: 'FAIL',
+                message: 'Failed to send offer',
+            };
+            res.json(data);
+        }
+        if (est) {
+            let c = est.chats.find((chat: any) => (chat.username === username));
+            if (c) {
+                if (est.isForSale){
+                    est.sold = true;
+                } else {
+                    let ocu = {
+                        fromDate: c.offer.fromDate,
+                        toDate: c.offer.toDate,
+                    };
+                    est.occupied.push(ocu);
+                }
+                c.offer = {};
+                est.save().then((x: any) => {
+                    let data = {
+                        status: 'OK',
+                        message: 'Success',
+                    };
+                    res.json(data);
+                }).catch((err: any) => {
+                    console.log(err);
+                    let data = {
+                        status: 'FAIL',
+                        message: 'Failed to send offer',
+                    };
+                    res.json(data);
+                });
+            }
+        } else {
+        let data = {
+            status: 'FAIL',
+            message: 'Failed to send offer',
+        };
+        console.log("fail");
+        res.json(data);
+    }
+    });
+});
+
+router.route('/declineoffer').post((req, res) => {
+    let id = req.body.id;
+    let username = req.body.username;
+
+    estate.findById(id, (err, est: any) => {
+        if(err){
+            let data = {
+                status: 'FAIL',
+                message: 'Failed to send offer',
+            };
+            res.json(data);
+        }
+        if (est) {
+            let c = est.chats.find((chat: any) => (chat.username === username));
+            if (c) {
+                c.offer = {};
+                est.save().then((x: any) => {
+                    let data = {
+                        status: 'OK',
+                        message: 'Success',
+                    };
+                    res.json(data);
+                }).catch((err: any) => {
+                    console.log(err);
+                    let data = {
+                        status: 'FAIL',
+                        message: 'Failed to send offer',
+                    };
+                    res.json(data);
+                });
+            }
+        } else {
+        let data = {
+            status: 'FAIL',
+            message: 'Failed to send offer',
+        };
+        console.log("fail");
+        res.json(data);
+    }
     });
 });
 

@@ -1,4 +1,6 @@
 export class Estate{
+    _id: string;
+    name: string;
     description : string;
     country : string;
     city : string;
@@ -17,12 +19,23 @@ export class Estate{
     isPromoted: boolean;
     chats: Chat[];
     images: string[];
+    sold: boolean;
+    occupied: {
+        fromDate: Date,
+        toDate: Date
+    }[];
 }
 
 export class Chat {
     username: string;
     isArchived: boolean;
     messages: Message[];
+    time: Date;
+    offer: {
+        price: number,
+        dateFrom: Date,
+        dateTo: Date,
+    };
 }
 
 export class Message {

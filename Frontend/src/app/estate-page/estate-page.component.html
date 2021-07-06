@@ -1,0 +1,40 @@
+<div *ngIf="isLoaded">
+    <h1>{{estate.name}}</h1>
+    <carousel [objectFit]="'cover'" [cellWidth]="'100%'" [autoplay]="true" [dots]="true">
+        <div *ngFor="let img of imgUrls" class="carousel-cell">
+            <img [src]="img" alt="Photo of estate">
+        </div>
+    </carousel>
+    <div *ngIf="!estate.ownedByAgency">
+        <h2> Owner: {{estate.owner}} </h2>
+    </div>
+    <h2>Agency: {{estate.agency}}</h2>
+    <button *ngIf="canContact" mat-raised-button color="accent" (click)="gotoContact()">Contact us</button>
+    <br>
+    <br>
+    <div *ngIf="estate.isForSale; else rent">
+        <h2>Buy estate</h2>
+        <mat-slide-toggle [(ngModel)]="loan">Take out a loan</mat-slide-toggle>
+        <h2>Price: {{estate.price}}</h2>
+        <h2 *ngIf="loan">Pay in advance: {{estate.price*0.2}}</h2>
+    </div>
+    <ng-template #rent>
+        <h2>Rent estate</h2>
+        <h2>Price: 1000 /per month</h2>
+    </ng-template>
+    <br>
+    <h2>Description</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nulla quidem reprehenderit eligendi? Fugit blanditiis
+        consectetur sit magnam officia sunt! Laudantium omnis quibusdam ullam. Quibusdam quis magnam adipisci eius
+        fugiat!</p>
+    <br>
+    <h2>General Information</h2>
+    <h4>Country: Serbia</h4>
+    <h4>City: Serbia</h4>
+    <h4>Address: Serbia</h4>
+    <h4>Type: House</h4>
+    <h4>Area: 120</h4>
+    <h4 *ngIf="true">Floor of apartment: 5</h4>
+    <h4>Number of floors: 3</h4>
+    <h4>Number of rooms: 3</h4>
+</div>

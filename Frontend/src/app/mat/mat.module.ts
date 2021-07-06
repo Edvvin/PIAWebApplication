@@ -18,6 +18,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 let Materials = [
     MatNativeDateModule,
@@ -38,7 +39,8 @@ let Materials = [
     MatPaginatorModule,
     MatTreeModule,
     MatExpansionModule,
-    MatCardModule
+    MatCardModule,
+    MatSlideToggleModule,
 ];
 
 @NgModule({

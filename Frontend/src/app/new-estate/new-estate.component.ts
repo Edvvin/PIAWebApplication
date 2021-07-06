@@ -16,25 +16,27 @@ export class NewEstateComponent implements OnInit {
   selectedFiles = [];
 
   fileSelectErrMsg: string;
+  name: string;
+  nameErr: string;
   description: string;
-  descriptionErr:string;
+  descriptionErr: string;
   country: string;
   countryErr: string;
   city: string;
   cityErr: string;
   address: string;
   addressErr: string;
-  estateType: string;
   flatFloor: number;
   flatFloorErr: string;
+  isHouse = true;
   area: number;
   areaErr: string;
   numOfFloors: number;
   numOfFloorsErr: string;
   numOfRooms: number;
   numOfRoomsErr: string;
-  isFurnished: boolean;
-  isForSale: boolean;
+  isFurnished = true;
+  isForSale = true;
   price: number;
   priceErr: string;
 
@@ -42,8 +44,16 @@ export class NewEstateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  radioBtn(val){
-    this.estateType = val;
+  setIsHouse(b){
+    this.isHouse = b;
+  }
+
+  setForSale(b){
+    this.isForSale = b;
+  }
+
+  setFurnished(b){
+    this.isFurnished = b;
   }
 
   selectFile(event) {
@@ -63,6 +73,13 @@ export class NewEstateComponent implements OnInit {
 
   submit(){
     let isBad = false;
+    if(this.name === undefined || this.name.length === 0){
+      this.nameErr = 'Name is required';
+      isBad = true;
+    }
+    else{
+      this.descriptionErr = '';
+    }
     if(this.description === undefined || this.description.length === 0){
       this.descriptionErr = 'Description is required';
       isBad = true;
@@ -139,11 +156,12 @@ export class NewEstateComponent implements OnInit {
     }
 
     let estate = new Estate;
+    estate.name = this.name;
     estate.description = this.description;
     estate.country = this.country;
     estate.city = this.city;
     estate.address = this.address;
-    estate.isHouse = (this.estateType === 'house');
+    estate.isHouse = this.isHouse;
     estate.floorOfAparment = this.flatFloor;
     estate.area = this.area;
     estate.numberOfFloors = this.numOfFloors;
@@ -152,10 +170,13 @@ export class NewEstateComponent implements OnInit {
     estate.isForSale = this.isForSale;
     estate.price = this.price;
     estate.isPromoted = false;
+    estate.sold = false;
+    estate.chats = [];
+    estate.occupied = [];
 
     let user: User = JSON.parse(localStorage.getItem('user'));
 
-    if(user.userType === 'agent'){
+    if (user.userType === 'agent'){
       estate.agency = user.agencyName;
       estate.owner = '';
       estate.ownedByAgency = true;

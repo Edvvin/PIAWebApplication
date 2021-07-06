@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import {Estate} from '../data/estate';
 import { UserService } from '../services/user.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { User } from '../data/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-estate-card',
@@ -10,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class EstateCardComponent implements OnInit {
 
-  constructor( private userService: UserService, private sanitizer: DomSanitizer) {
+  constructor( private userService: UserService, private sanitizer: DomSanitizer, private router: Router) {
    }
 
   @Input()
@@ -37,6 +39,13 @@ export class EstateCardComponent implements OnInit {
         },
         error => console.error(error)
       );
+    }
+  }
+
+  openCard(){
+    let u: User = JSON.parse(localStorage.getItem('user'));
+    if (u){
+      this.router.navigate(['/estate', this.estate._id]);
     }
   }
 

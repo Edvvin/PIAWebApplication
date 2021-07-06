@@ -4,6 +4,13 @@
 <div layout="column" class = "newestate-form">
     <div flex>
         <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <textarea matInput required [(ngModel)]="name"></textarea>
+            <mat-hint class="error-msg">{{nameErr}}</mat-hint>
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
             <mat-label>Estate Description</mat-label>
             <textarea matInput required [(ngModel)]="description"></textarea>
             <mat-hint class="error-msg">{{descriptionErr}}</mat-hint>
@@ -33,42 +40,42 @@
     <div flex>
         <mat-label>Chose estate type</mat-label>
         <mat-radio-group aria-label="Select an option" [selected]="initialRB">
-            <mat-radio-button value="house" (change)="radioBtn('house')" #initialRB>House</mat-radio-button>
-            <mat-radio-button value="flat" (change)="radioBtn('flat')">Flat</mat-radio-button>
+            <mat-radio-button value="house" (change)="setIsHouse(true)" #initialRB>House</mat-radio-button>
+            <mat-radio-button value="flat" (change)="setIsHouse(false)">Flat</mat-radio-button>
         </mat-radio-group>
     </div>
-    <div flex *ngIf="estateType==='flat'">
+    <div flex *ngIf="!isHouse">
         <mat-form-field appearance="fill">
             <mat-label>Floor of apartment</mat-label>
-            <input matInput type="number" [(ngModel)] = "flatFloor">
+            <input matInput required type="number" [(ngModel)] = "flatFloor">
             <mat-hint class="error-msg">{{flatFloorErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Area</mat-label>
-            <input matInput type="number" [(ngModel)]="area">
+            <input matInput required type="number" [(ngModel)]="area">
             <mat-hint class="error-msg">{{areaErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Number of floors</mat-label>
-            <input matInput type="number" [(ngModel)]="numOfFloors">
+            <input matInput required type="number" [(ngModel)]="numOfFloors">
             <mat-hint class="error-msg">{{numOfFloorsErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label>Number of Rooms</mat-label>
-            <input matInput type="number" [(ngModel)]="numOfRooms">
+            <input matInput required type="number" [(ngModel)]="numOfRooms">
             <mat-hint class="error-msg">{{numOfRoomsErr}}</mat-hint>
         </mat-form-field>
     </div>
     <div flex>
         <mat-radio-group aria-label="Select an option" [selected]="initialFRB">
-            <mat-radio-button value="furnished" #initialFRB>Furnished</mat-radio-button>
-            <mat-radio-button value="notfurnished">Not furnished</mat-radio-button>
+            <mat-radio-button value="furnished" (change)="setFurnished(true)" #initialFRB>Furnished</mat-radio-button>
+            <mat-radio-button value="notfurnished" (change)="setFurnished(false)" >Not furnished</mat-radio-button>
         </mat-radio-group>
     </div>
     <div flex *ngFor="let f of selectedFiles; let i = index;">
@@ -93,14 +100,14 @@
     </div>
     <div flex>
         <mat-radio-group aria-label="Select an option" [selected]="initialSRB" #forSaleRent>
-            <mat-radio-button value="sale" #initialSRB>For sale</mat-radio-button>
-            <mat-radio-button value="rent">For rent</mat-radio-button>
+            <mat-radio-button value="sale" (change)="setForSale(true)" #initialSRB>For sale</mat-radio-button>
+            <mat-radio-button value="rent"(change)="setForSale(false)">For rent</mat-radio-button>
         </mat-radio-group>
     </div>
     <div flex>
         <mat-form-field appearance="fill">
             <mat-label >Price</mat-label>
-            <input matInput type="number" [(ngModel)]="price">
+            <input matInput required type="number" [(ngModel)]="price">
             <mat-hint class="error-msg">{{priceErr}}</mat-hint>
         </mat-form-field>
     </div>

@@ -3,6 +3,9 @@ import mongoose, { SchemaTypes } from 'mongoose';
 const Schema = mongoose.Schema;
 
 let Estate = new Schema({
+    name: {
+        type: String,
+    },
     description: {
         type: String,
     },
@@ -51,6 +54,16 @@ let Estate = new Schema({
     isPromoted: {
         type: Boolean,
     },
+    occupied: {
+        type: [{
+            fromDate: {
+                type: Date,
+            },
+            toDate: {
+                type: Date,
+            },
+        }],
+    },
     chats: {
         type: [{
             username: {
@@ -58,6 +71,19 @@ let Estate = new Schema({
             },
             isArchived: {
                 type: Boolean,
+            },
+            offer: {
+                type: {
+                    price: {
+                        type: Number,
+                    },
+                    fromDate: {
+                        type: Date,
+                    },
+                    toDate: {
+                        type: Date,
+                    },
+                },
             },
             messages: {
                 type: [{
@@ -70,12 +96,18 @@ let Estate = new Schema({
                     sender: {
                         type: String,
                     },
+                    time: {
+                        type: Date,
+                    },
                 }],
             },
         }],
     },
     images: {
         type: [String],
+    },
+    sold: {
+        type: Boolean,
     }
 });
 
