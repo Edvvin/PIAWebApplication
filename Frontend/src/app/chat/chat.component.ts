@@ -114,8 +114,14 @@ export class ChatComponent implements OnInit {
   sendMessageClick(): void {
     if (!this.chat) {
       let withWho = this.isOwner ? this.toUser : this.user.username;
-      this.estateService.newChat(this.estate._id, withWho).subscribe((res) => {
-        this.sendMessage();
+      this.estateService.newChat(this.estate._id, withWho).subscribe((res: any) => {
+        if(res.status === "OK"){
+          this.chat = res.chat;
+          this.sendMessage();
+        }
+        else{
+          console.log(res.message);
+        }
       });
     } else {
       this.sendMessage();
@@ -156,7 +162,11 @@ export class ChatComponent implements OnInit {
   }
 
   declineOffer(){
-
+    this.estateService.declineOffer(this.estate._id, this.toUser).subscribe((res: any)=>{
+      if (res.status === 'OK'){
+        this.currentOffer = undefined;
+      }
+    });
   }
 
   firstOccupiedFound = false;

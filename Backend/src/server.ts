@@ -361,6 +361,11 @@ router.route('/newchat').post((req, res) => {
                 let data = {
                     status: 'OK',
                     message: 'Success',
+                    chat: {
+                        username: username,
+                        isArchived: false,
+                        messages: [] as any[],
+                    },
                 };
                 res.json(data);
             }

@@ -13,13 +13,19 @@
             </div>
         </div>
 
-        <div class="chatbox">
+        <div *ngIf="chat; else emptychat" class="chatbox">
             <!-- Because CSS this part is reveresed-->
             &nbsp;
             <div *ngFor="let m of chat.messages">
                 <app-chat-message [isAgency]="estate.ownedByAgency" [isOwner]="isOwner" [message]="m"></app-chat-message>
             </div>
         </div>
+        <ng-template #emptychat>
+            <div class="chatbox">
+                &nbsp;
+            </div>
+        </ng-template>
+        
 
         <div class="bottom">
             <mat-form-field class="messagebox" appearance="fill">
