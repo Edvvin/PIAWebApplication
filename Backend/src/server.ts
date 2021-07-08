@@ -135,11 +135,70 @@ router.route('/allusers').get((req, res) =>{
     });
 });
 
-router.route('/changepass').post((req, res) =>{
+router.route('/getallestates').get(
+    (req, res) => {
+        estate.find({},
+            (err, e) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json(e);
+                }
+            });
+    });
+
+router.route('/archivechat').post(
+    (req, res) => {
+        let id = req.body.id;
+        let username = req.body.username;
+        let isOwner = req.body.isOwner;
+
+        estate.findById(id,
+            (err, e: any) => {
+                if (err) {
+                    let data = {
+                        status: 'FAIL',
+                    };
+
+                    console.log(err);
+                } else {
+                    let chat = e.chats.find((c: any) => c.username === username);
+                    if (chat) {
+                        if(isOwner){
+                            chat.isArchivedByOwner = !chat.isArchivedByOwner;
+                        } else{
+                            chat.isArchivedByCustomer = !chat.isArchivedByCustomer;
+                        }
+                        e.save().then((e: any)=>{
+                            let data = {
+                                status: 'OK',
+                            };
+
+                            res.json(data);
+                        }).catch((e: any) => {
+                            let data = {
+                                status: 'FAIL',
+                            };
+
+                            res.json(data);
+                        });
+                    } else {
+                        let data = {
+                            status: 'FAIL',
+                        };
+
+                        res.json(data);
+                    }
+
+                }
+            });
+    });
+
+router.route('/changepass').post((req, res) => {
     let username = req.body.username;
-    let password = req.body.password ;
+    let password = req.body.password;
     user.collection.updateOne({ username: username },
-        { $set: {password : password} });
+        { $set: { password: password } });
 
     res.json({ message: 'Successfully change password' });
 });
@@ -147,15 +206,15 @@ router.route('/changepass').post((req, res) =>{
 router.route('/upload').post(upload.single('file'), (req: any, res, next) => {
     const file = req.file;
     console.log(file);
-    if( !file ) {
+    if (!file) {
         const error = new Error('No file given');
         return next(error);
     }
     res.send(file);
 });
 
-router.route('/download').post((req, res, next)=>{
-    var filepath = path.join(__dirname,'../upload' + '/' + req.body.filename);
+router.route('/download').post((req, res, next) => {
+    var filepath = path.join(__dirname, '../upload' + '/' + req.body.filename);
     res.sendFile(filepath);
 });
 
@@ -186,7 +245,7 @@ router.route('/setestateimage').post((req, res) => {
             res.status(400).json({ 'status': 'FAIL' });
         } else {
             if (est) {
-                estate.findByIdAndUpdate(id, { $push: { images: img} }, (err, res1) => {});
+                estate.findByIdAndUpdate(id, { $push: { images: img } }, (err, res1) => { });
                 res.json({ status: 'OK' });
             } else {
                 res.status(400).json({ status: 'FAIL' });
@@ -217,7 +276,7 @@ router.route('/addestate').post((req, res) => {
 
 router.route('/search').post((req, res) => {
     let searchObj: any = {
-        price: {$gt: req.body.lower, $lt: req.body.upper},
+        price: { $gt: req.body.lower, $lt: req.body.upper },
     };
 
     if (req.body.city !== '') {
@@ -261,7 +320,7 @@ router.route('/getestate').post((req, res) => {
 
 router.route('/sellestate').post((req, res) => {
     let id = req.body.id;
-    estate.findByIdAndUpdate(id, { $set: {sold: true} },
+    estate.findByIdAndUpdate(id, { $set: { sold: true } },
         (err, res1) => {
             if (err) {
                 let data = {
@@ -293,15 +352,18 @@ router.route('/sendtoowner').post((req, res) => {
                 };
                 res.json(data);
             } else {
-                res1.chats.find((c: any) => (c.username === fromUser)).messages.push(
-                    { text: message, fromClient: true, sender: fromUser });
+                let chat = res1.chats.find((c: any) => (c.username === fromUser));
+                chat.messages.push( { text: message, fromClient: true, sender: fromUser, time: new Date()});
+                chat.time = new Date();
+                chat.isArchivedByCustomer = false;
+                chat.isArchivedByOwner = false;
                 res1.save().then((x: any) => {
                     let data = {
                         status: 'OK',
                         message: 'Success',
                     };
                     res.json(data);
-                }).catch((err: any) =>{
+                }).catch((err: any) => {
                     let data = {
                         status: 'FAIL',
                         message: 'Failed to send message to owner',
@@ -327,15 +389,18 @@ router.route('/sendtoclient').post((req, res) => {
                 };
                 res.json(data);
             } else {
-                res1.chats.find((c: any) => (c.username === toUser)).messages.push(
-                    { text: message, fromClient: true, sender: fromUser });
+                let chat = res1.chats.find((c: any) => (c.username === toUser))
+                chat.messages.push({ text: message, fromClient: true, sender: fromUser, time: (new Date())});
+                chat.time = new Date();
+                chat.isArchivedByCustomer = false;
+                chat.isArchivedByOwner = false;
                 res1.save().then((x: any) => {
                     let data = {
                         status: 'OK',
                         message: 'Success',
                     };
                     res.json(data);
-                }).catch((err: any) =>{
+                }).catch((err: any) => {
                     let data = {
                         status: 'FAIL',
                         message: 'Failed to send message to owner',
@@ -349,7 +414,7 @@ router.route('/sendtoclient').post((req, res) => {
 router.route('/newchat').post((req, res) => {
     let username = req.body.username;
     let id = req.body.id;
-    estate.findByIdAndUpdate(id, { $push: { chats: { username: username, isArchived: false, messages: [] } } },
+    estate.findByIdAndUpdate(id, { $push: { chats: { username: username, isArchivedByOwner: false, isArchivedByCustomer: false, time: new Date(), messages: [] } } },
         (err, res1) => {
             if (err) {
                 let data = {
@@ -363,8 +428,10 @@ router.route('/newchat').post((req, res) => {
                     message: 'Success',
                     chat: {
                         username: username,
-                        isArchived: false,
+                        isArchivedByOwner: false,
+                        isArchivedByCustomer: false,
                         messages: [] as any[],
+                        time: new Date(),
                     },
                 };
                 res.json(data);
@@ -380,7 +447,7 @@ router.route('/sendoffer').post((req, res) => {
     let offer = req.body.offer;
 
     estate.findById(id, (err, est: any) => {
-        if(err){
+        if (err) {
             let data = {
                 status: 'FAIL',
                 message: 'Failed to send offer',
@@ -395,6 +462,9 @@ router.route('/sendoffer').post((req, res) => {
                     fromDate: fromDate,
                     toDate: toDate,
                 };
+                c.time = new Date();
+                c.isArchivedByCustomer = false;
+                c.isArchivedByOwner = false;
                 est.save().then((x: any) => {
                     let data = {
                         status: 'OK',
@@ -411,13 +481,13 @@ router.route('/sendoffer').post((req, res) => {
                 });
             }
         } else {
-        let data = {
-            status: 'FAIL',
-            message: 'Failed to send offer',
-        };
-        console.log("fail");
-        res.json(data);
-    }
+            let data = {
+                status: 'FAIL',
+                message: 'Failed to send offer',
+            };
+            console.log("fail");
+            res.json(data);
+        }
     });
 });
 
@@ -426,7 +496,7 @@ router.route('/acceptoffer').post((req, res) => {
     let username = req.body.username;
 
     estate.findById(id, (err, est: any) => {
-        if(err){
+        if (err) {
             let data = {
                 status: 'FAIL',
                 message: 'Failed to send offer',
@@ -436,7 +506,7 @@ router.route('/acceptoffer').post((req, res) => {
         if (est) {
             let c = est.chats.find((chat: any) => (chat.username === username));
             if (c) {
-                if (est.isForSale){
+                if (est.isForSale) {
                     est.sold = true;
                 } else {
                     let ocu = {
@@ -462,13 +532,13 @@ router.route('/acceptoffer').post((req, res) => {
                 });
             }
         } else {
-        let data = {
-            status: 'FAIL',
-            message: 'Failed to send offer',
-        };
-        console.log("fail");
-        res.json(data);
-    }
+            let data = {
+                status: 'FAIL',
+                message: 'Failed to send offer',
+            };
+            console.log("fail");
+            res.json(data);
+        }
     });
 });
 
@@ -477,7 +547,7 @@ router.route('/declineoffer').post((req, res) => {
     let username = req.body.username;
 
     estate.findById(id, (err, est: any) => {
-        if(err){
+        if (err) {
             let data = {
                 status: 'FAIL',
                 message: 'Failed to send offer',
@@ -504,13 +574,13 @@ router.route('/declineoffer').post((req, res) => {
                 });
             }
         } else {
-        let data = {
-            status: 'FAIL',
-            message: 'Failed to send offer',
-        };
-        console.log("fail");
-        res.json(data);
-    }
+            let data = {
+                status: 'FAIL',
+                message: 'Failed to send offer',
+            };
+            console.log("fail");
+            res.json(data);
+        }
     });
 });
 

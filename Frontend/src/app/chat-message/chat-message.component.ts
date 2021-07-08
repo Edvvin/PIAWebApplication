@@ -21,6 +21,7 @@ export class ChatMessageComponent implements OnInit {
 
   name: string;
   isRight: boolean;
+  time: Date;
 
   ngOnInit(): void {
     let user = JSON.parse(localStorage.getItem('user'));
@@ -35,6 +36,7 @@ export class ChatMessageComponent implements OnInit {
         this.name = this.message.sender;
       }
     }
+    this.time = new Date(this.message.time);
   }
 
 }

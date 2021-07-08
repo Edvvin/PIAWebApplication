@@ -27,7 +27,8 @@ export class EstateService {
   }
 
   getAllEstates(){
-    return this.http.get(`${this.uri}/getallestates`, null);
+    let data = {};
+    return this.http.get(`${this.uri}/getallestates`, data);
   }
 
   getEstate(id: string) {
@@ -115,6 +116,16 @@ export class EstateService {
     };
 
     return this.http.post(`${this.uri}/declineoffer`, data);
+  }
+
+  archiveChat(estateId: string, username: string, isOwner: boolean){
+    let data = {
+      id: estateId,
+      username: username,
+      isOwner: isOwner,
+    };
+
+    return this.http.post(`${this.uri}/archivechat`, data);
   }
 
 }

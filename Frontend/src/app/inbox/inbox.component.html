@@ -1,1 +1,30 @@
-<p>inbox works!</p>
+<div *ngIf="isLoaded">
+    <mat-tab-group>
+        <mat-tab label="Inbox">
+            <mat-list>
+                <div *ngFor="let c of inboxChats">
+                    <mat-list-item (click)="gotoChat(c)" class="chat">
+                        Chat: {{c.estate.name}}
+                        <br>
+                        {{c.isOwner?c.chat.username:(c.estate.isOwnedByAgency?c.estate.agency:c.estate.owner)}}
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </div>
+            </mat-list>
+        </mat-tab>
+
+        <mat-tab label="Archived">
+            <mat-list>
+                <div *ngFor="let c of archivedChats">
+                    <mat-list-item (click)="gotoChat(c)" class="chat">
+                        Chat: {{c.estate.name}}
+                        <br>
+                        {{c.isOwner?c.chat.username:(c.estate.isOwnedByAgency?c.estate.agency:c.estate.owner)}}
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </div>
+            </mat-list>
+
+        </mat-tab>
+    </mat-tab-group>
+</div>

@@ -8,15 +8,15 @@ mat-card{
 }
 
 .left mat-card-footer{
-    padding-left: 90%;
+    padding-left: 80%;
 }
 
 .right{
-    width: 80%;
+    width: 75%;
     margin-left: auto;
     margin-right: 20px;
 }
 
 .right mat-card-footer{
-    padding-left: 90%;
+    padding-left: 75%;
 }

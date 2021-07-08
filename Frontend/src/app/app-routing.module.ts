@@ -8,6 +8,7 @@ import { NewEstateComponent } from './new-estate/new-estate.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { ChatComponent } from './chat/chat.component';
 import { EstatePageComponent } from './estate-page/estate-page.component';
+import { InboxComponent } from './inbox/inbox.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,7 @@ const routes: Routes = [
     canActivate: []
   },
   {
-    path: 'inbox', component: SignupComponent,
+    path: 'inbox', component: InboxComponent,
     data: { breadcrumb: 'Inbox' },
     canActivate: []
   },

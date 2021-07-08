@@ -6,7 +6,7 @@
   <mat-card-content>
     <p>{{message.text}}</p>
   </mat-card-content>
-  <mat-card-footer>June 26 11:10AM</mat-card-footer>
+  <mat-card-footer>{{time.toISOString().split('.')[0].replace('T', ' ')}}</mat-card-footer>
 
 </mat-card>
 </div>
@@ -18,6 +18,6 @@
   <mat-card-content>
     <p>{{message.text}}</p>
   </mat-card-content>
-  <mat-card-footer>June 26 11:10AM</mat-card-footer>
+  <mat-card-footer>{{time.toISOString().split('.')[0].replace('T', ' ')}}</mat-card-footer>
 </mat-card>
 </ng-template>

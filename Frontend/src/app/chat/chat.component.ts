@@ -31,6 +31,7 @@ export class ChatComponent implements OnInit {
   btnerr: string;
   offer: number;
   currentOffer: number;
+  isArchived: boolean;
 
   isAfter(date1: Date, date2: Date, orSame: boolean){
     if(date1.getFullYear() > date2.getFullYear()){
@@ -84,6 +85,7 @@ export class ChatComponent implements OnInit {
           else{
             this.currentOffer = undefined;
           }
+          this.isArchived = this.isOwner ? this.chat.isArchivedByOwner : this.chat.isArchivedByCustomer;
         }
         this.secondDateChosen(true);
         this.btnerr = 'accent';
@@ -97,14 +99,14 @@ export class ChatComponent implements OnInit {
         if (this.isOwner) {
           this.estateService.sendMessageToClient(this.estate._id, this.user.username, this.toUser, this.msgText).subscribe((res: any)=>{
             if (res.status === 'OK'){
-              this.chat.messages.unshift({ text: this.msgText, fromClient: false, sender: this.user.username });
+              this.chat.messages.unshift({ text: this.msgText, fromClient: false, sender: this.user.username, time: new Date()});
               this.msgText = '';
             }
           });
         } else {
           this.estateService.sendMessageToOwner(this.estate._id, this.user.username, this.msgText).subscribe((res: any)=>{
             if (res.status === 'OK'){
-              this.chat.messages.unshift({ text: this.msgText, fromClient: true, sender: this.user.username });
+              this.chat.messages.unshift({ text: this.msgText, fromClient: true, sender: this.user.username, time: new Date()});
               this.msgText = '';
             }
           });
@@ -222,6 +224,15 @@ export class ChatComponent implements OnInit {
       return ret;
     };
     this.btnerr = 'accent';
+  }
+
+  archive(){
+    let withWho = this.isOwner ? this.toUser : this.user.username;
+    this.estateService.archiveChat(this.estate._id, withWho, this.isOwner).subscribe((res: any) => {
+      if (res.status === 'OK'){
+        this.isArchived = !this.isArchived;
+      }
+    });
   }
 
 }

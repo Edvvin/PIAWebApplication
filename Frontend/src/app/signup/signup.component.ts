@@ -121,7 +121,6 @@ export class SignupComponent implements OnInit {
           const formData = new FormData();
           formData.append('file', this.selectedFiles[0]);
           this.userService.upload(formData).subscribe((res: any) => {
-            console.log("TESTTESTTEST");
             this.userService.setImage(this.username, res.filename).subscribe((rep: any) => {
               if (rep.status !== 'OK') {
                 alert('image not set');

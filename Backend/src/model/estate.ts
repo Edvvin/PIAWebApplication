@@ -69,8 +69,14 @@ let Estate = new Schema({
             username: {
                 type: String,
             },
-            isArchived: {
+            isArchivedByOwner: {
                 type: Boolean,
+            },
+            isArchivedByCustomer: {
+                type: Boolean,
+            },
+            time: {
+                type: Date,
             },
             offer: {
                 type: {

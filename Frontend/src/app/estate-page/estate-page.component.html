@@ -20,21 +20,19 @@
     </div>
     <ng-template #rent>
         <h2>Rent estate</h2>
-        <h2>Price: 1000 /per month</h2>
+        <h2>Price: {{estate.price}} /per month</h2>
     </ng-template>
     <br>
     <h2>Description</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nulla quidem reprehenderit eligendi? Fugit blanditiis
-        consectetur sit magnam officia sunt! Laudantium omnis quibusdam ullam. Quibusdam quis magnam adipisci eius
-        fugiat!</p>
+    <p>{{estate.description}}</p>
     <br>
     <h2>General Information</h2>
-    <h4>Country: Serbia</h4>
-    <h4>City: Serbia</h4>
-    <h4>Address: Serbia</h4>
-    <h4>Type: House</h4>
-    <h4>Area: 120</h4>
-    <h4 *ngIf="true">Floor of apartment: 5</h4>
-    <h4>Number of floors: 3</h4>
-    <h4>Number of rooms: 3</h4>
+    <h4>Country: {{estate.country}}</h4>
+    <h4>City: {{estate.city}}</h4>
+    <h4>Address: {{estate.address}}</h4>
+    <h4>Type: {{estate.isHouse?'House':'Flat'}}</h4>
+    <h4>Area: {{estate.area}}</h4>
+    <h4 *ngIf="true">Floor of apartment: {{estate.floorOfAparment}}</h4>
+    <h4>Number of floors: {{estate.numberOfFloors}}</h4>
+    <h4>Number of rooms: {{estate.numberOfRooms}}</h4>
 </div>

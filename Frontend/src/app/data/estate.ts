@@ -28,7 +28,8 @@ export class Estate{
 
 export class Chat {
     username: string;
-    isArchived: boolean;
+    isArchivedByOwner: boolean;
+    isArchivedByCustomer: boolean;
     messages: Message[];
     time: Date;
     offer: {
@@ -42,4 +43,5 @@ export class Message {
     text: string;
     fromClient: boolean;
     sender: string;
+    time: Date;
 }

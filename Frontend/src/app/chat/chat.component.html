@@ -7,8 +7,8 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #moreopts="matMenu">
-                    <a mat-menu-item routerLink='usersettings'>Archive</a>
-                    <a mat-menu-item routerLink=''>Block/Unblock</a>
+                    <button (click)="archive()" mat-menu-item>{{isArchived?'Unarchive':'Archive'}}</button>
+                    <a mat-menu-item>Block/Unblock</a>
                 </mat-menu>
             </div>
         </div>
