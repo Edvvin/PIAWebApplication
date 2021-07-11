@@ -49,15 +49,6 @@ export class EstateService {
     return this.http.post(`${this.uri}/search`, data);
   }
 
-  verifyEstate(estateId: number, byWho: string, agency: string){
-    let data = {
-      estateId: estateId,
-      byWho: byWho,
-      agency: agency,
-    };
-    return this.http.post(`${this.uri}/verifyestate`, data);
-  }
-
   sendMessageToOwner(estateId: string, fromUsername: string, message: string){
     let data = {
       id: estateId,
@@ -65,7 +56,7 @@ export class EstateService {
       message: message,
     }
 
-      return this.http.post(`${this.uri}/sendtoowner`, data);
+    return this.http.post(`${this.uri}/sendtoowner`, data);
   }
 
   sendMessageToClient(estateId:string, fromUsername: string, toUsername: string, message: string){
@@ -76,7 +67,7 @@ export class EstateService {
       message: message,
     }
 
-      return this.http.post(`${this.uri}/sendtoclient`, data);
+    return this.http.post(`${this.uri}/sendtoclient`, data);
   }
 
   newChat (estateId: string, username: string) {
@@ -126,6 +117,14 @@ export class EstateService {
     };
 
     return this.http.post(`${this.uri}/archivechat`, data);
+  }
+
+  promote(estateId: string){
+    let data = {
+      id: estateId,
+    };
+
+    return this.http.post(`${this.uri}/promote`, data);
   }
 
 }

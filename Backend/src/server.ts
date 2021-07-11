@@ -67,6 +67,49 @@ router.route('/login').post((req, res) =>{
     });
 });
 
+router.route('/changepass').post((req, res) =>{
+    let username = req.body.username;
+    let password = req.body.password;
+    let newpassword = req.body.newpassword;
+
+    user.findOne({'username': username}, (err, usr: any) => {
+        if(err){
+            console.log(err);
+        } else {
+            if (usr) {
+                if (usr.password === password) {
+                    usr.password = newpassword;
+                    usr.save().then(()=>{
+                        let data = {
+                            status: "OK",
+                            message: "Change successful",
+                        };
+                        res.json(data);
+                    }).catch(()=>{
+                        let data = {
+                            status: "FAIL",
+                            message: "Change failed",
+                        };
+                        res.json(data);
+                    });
+                } else{
+                    let data = {
+                        status: "FAIL",
+                        message: "Password wrong",
+                    };
+                    res.json(data);
+                }
+            } else {
+                let data = {
+                    status: "FAIL",
+                    message: "Cannot find user " + username,
+                };
+                res.json(data);
+            }
+        }
+    });
+});
+
 router.route('/register').post((req, res) =>{
     let u : any = new user(req.body);
     user.findOne({'username':u.username}, (err,usr) => {
@@ -106,7 +149,7 @@ router.route('/verifyuser').post((req, res) =>{
         } else {
             if (u) {
                 user.collection.updateOne({ "username": username },
-                 { $set: {'isVerified' : true} });
+                 { $set: {'isVerified' : 'unverified'} });
                 res.json({ 'message': 'Successfully verified user' });
             } else {
                 res.json({ 'message': 'user: ' + username + 'not found'});
@@ -117,7 +160,7 @@ router.route('/verifyuser').post((req, res) =>{
 
 
 router.route('/unverified').get((req, res) =>{
-    user.find({isVerified: false}, (err, u) =>{
+    user.find({isVerified: 'unverified'}, (err, u) =>{
         if(err) {
             console.log(err);
         } else {
@@ -296,7 +339,6 @@ router.route('/search').post((req, res) => {
                 message: "Successfully searched",
                 estates: est,
             }
-            console.log(est);
             res.json(data);
         }
     });
@@ -485,7 +527,6 @@ router.route('/sendoffer').post((req, res) => {
                 status: 'FAIL',
                 message: 'Failed to send offer',
             };
-            console.log("fail");
             res.json(data);
         }
     });
@@ -536,7 +577,6 @@ router.route('/acceptoffer').post((req, res) => {
                 status: 'FAIL',
                 message: 'Failed to send offer',
             };
-            console.log("fail");
             res.json(data);
         }
     });
@@ -578,11 +618,73 @@ router.route('/declineoffer').post((req, res) => {
                 status: 'FAIL',
                 message: 'Failed to send offer',
             };
-            console.log("fail");
             res.json(data);
         }
     });
 });
+
+router.route('/acceptuser').post((req, res) => {
+    let username = req.body.username;
+    user.findOne({username: username}, (err, usr: any) => {
+        if(usr){
+            usr.isVerified = 'verified';
+            usr.save().then(()=>{
+                let data = {
+                    status: 'OK',
+                };
+                res.json(data);
+            }).catch((e: any)=>{
+                console.log(e);
+                let data = {
+                    status: 'FAIL',
+                };
+                res.json(data);
+            });
+        } else{
+            let data = {
+                status: 'FAIL',
+            };
+            res.json(data);
+        }
+    });
+});
+
+router.route('/rejectuser').post((req, res) => {
+    let username = req.body.username;
+    user.findOneAndRemove({username: username}, (err, usr: any) => {
+        if(usr){
+            let data = {
+                status: 'OK',
+            };
+            res.json(data);
+        } else{
+            let data = {
+                status: 'FAIL',
+            };
+            res.json(data);
+        }
+    });
+});
+
+router.route('/promote').post((req, res) => {
+    let id = req.body.id;
+    estate.findById(id, (err, est: any) => {
+        est.isPromoted = !est.isPromoted;
+        est.save().then(() => {
+            let data = {
+                status: 'OK',
+            };
+            res.json(data);
+        }).catch((err: any) => {
+            console.log(err);
+            let data = {
+                status: 'FAIL',
+            };
+            res.json(data);
+        });
+    });
+});
+
 
 //app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/', router);

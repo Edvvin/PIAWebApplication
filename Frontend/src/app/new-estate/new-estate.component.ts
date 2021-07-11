@@ -176,13 +176,11 @@ export class NewEstateComponent implements OnInit {
 
     let user: User = JSON.parse(localStorage.getItem('user'));
 
-    if (user.userType === 'agent'){
-      estate.agency = user.agencyName;
+    if (user.userType !== 'regular'){
       estate.owner = '';
       estate.ownedByAgency = true;
     }
     else{
-      estate.agency = '';
       estate.owner = user.username;
       estate.ownedByAgency = false;
     }

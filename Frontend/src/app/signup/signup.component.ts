@@ -109,7 +109,7 @@ export class SignupComponent implements OnInit {
     user.city = this.city;
     user.country = this.country;
     user.password = this.password;
-    user.isVerified = false;
+    user.isVerified = 'unverified';
     user.userType = 'regular';
     user.image = '';
 

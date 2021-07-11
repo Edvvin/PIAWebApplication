@@ -9,6 +9,11 @@
     text-align: right;
 }
 
+.toolbar-items div{
+    width: 100%;
+    text-align: right;
+}
+
 .logo{
     height: 9vh;
 }
@@ -37,6 +42,7 @@
 .active-list-item{
   background-color: #673AB7;
 }
+
 
 .xng-breadcrumb-root {
     padding: 4px 16px;

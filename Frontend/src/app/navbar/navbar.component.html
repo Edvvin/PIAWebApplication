@@ -1,48 +1,54 @@
 <mat-sidenav-container class="sidenav-cont">
-  <mat-sidenav  #drawer class="sidenav" fixedInViewport [mode]="'side'" [opened]="sidebar" >
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [mode]="'side'" [opened]="sidebar">
 
-    <mat-nav-list>
-        <a mat-list-item class = "close-sidenav" (click)="sidebar=false"><mat-icon>navigate_before</mat-icon></a>
-        <a mat-list-item>Start</a>
-        <a mat-list-item  routerLink='zaposleni' routerLinkActive="active-list-item">Zaposleni</a>
-      
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Sub
-                </mat-panel-title>
-                <mat-panel-description>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-        <a mat-list-item>Example 0</a>
-        <a mat-list-item  routerLink='' routerLinkActive="active-list-item">Example 1</a>
-        </mat-expansion-panel>
-      <a mat-list-item routerLink='' routerLinkActive="active-list-item">Example 2</a>
-      <a mat-list-item  routerLink='' routerLinkActive="active-list-item">Example 3</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary" class="toolbar">
-        <mat-toolbar-row >
-            <button mat-button (click)="toggleSidebar()" class="sidebar-toggle"><mat-icon>menu</mat-icon></button>
-            <a mat-button routerLink=''><img class="logo" src="../../assets/HousesAndStuff.png"> </a>
-            <div fxShow="true" fxHide.lt-md="true" class="toolbar-items">
-                <button mat-button [matMenuTriggerFor]="menu_example">
-                    Person Personski
+        <mat-nav-list>
+            <a mat-list-item class="close-sidenav" (click)="sidebar=false">
+                <mat-icon>navigate_before</mat-icon>
+            </a>
+            <a mat-list-item routerLink=''>Home Page</a>
+
+            <mat-expansion-panel *ngIf="isAdmin">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Admin
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <a mat-list-item routerLink='/userrequests' routerLinkActive="active-list-item">User Requests</a>
+            </mat-expansion-panel>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary" class="toolbar">
+            <mat-toolbar-row>
+                <button mat-button (click)="toggleSidebar()" class="sidebar-toggle">
+                    <mat-icon>menu</mat-icon>
                 </button>
-                <mat-menu #menu_example="matMenu">
-                    <a mat-menu-item routerLink='usersettings' >Account settings</a>
-                    <a mat-menu-item (click)="logout()">Log out</a>
-                </mat-menu>
-                <button mat-button routerLink='inbox'>Inbox</button>
-                <button mat-button routerLink='login'>Log in</button>
-                <button mat-raised-button routerLink='signup' color="accent">Sign up</button>
-            </div>
-        </mat-toolbar-row>
-        <mat-toolbar-row>
-            <xng-breadcrumb class="xng-breadcrumb-root"></xng-breadcrumb>
-        </mat-toolbar-row>
-    </mat-toolbar>
-    <div class="padabit"><ng-content></ng-content></div>
+                <a mat-button routerLink=''><img class="logo" src="../../assets/HousesAndStuff.png"> </a>
+                <div fxShow="true" fxHide.lt-md="true" class="toolbar-items">
+                    <div *ngIf="!isGuest; else userHeader">
+                        <button mat-button [matMenuTriggerFor]="menu_example">
+                            {{user.name}} &nbsp; {{user.surname}}
+                        </button>
+                        <mat-menu #menu_example="matMenu">
+                            <a mat-menu-item routerLink='usersettings'>Account settings</a>
+                            <a mat-menu-item (click)="logout()">Log out</a>
+                        </mat-menu>
+                        <button mat-button routerLink='inbox'>Inbox</button>
+                    </div>
+                    <ng-template #userHeader>
+                        <button mat-button routerLink='login'>Log in</button>
+                        <button mat-raised-button routerLink='signup' color="accent">Sign up</button>
+                    </ng-template>
+                </div>
+            </mat-toolbar-row>
+            <mat-toolbar-row>
+                <xng-breadcrumb class="xng-breadcrumb-root"></xng-breadcrumb>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="padabit">
+            <ng-content></ng-content>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

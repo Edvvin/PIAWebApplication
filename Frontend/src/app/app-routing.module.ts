@@ -9,58 +9,67 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { ChatComponent } from './chat/chat.component';
 import { EstatePageComponent } from './estate-page/estate-page.component';
 import { InboxComponent } from './inbox/inbox.component';
+import { UserRequestsComponent } from './user-requests/user-requests.component';
+import { AccessGuard } from './access.guard';
 
 
 const routes: Routes = [
   {
     path: '', component: HomeComponent,
     data: { breadcrumb: 'Home' },
-    canActivate: []
   },
   {
     path: 'login', component: LoginComponent,
     data: { breadcrumb: 'Log in' },
-    canActivate: []
+    canActivate: [AccessGuard]
   },
   {
     path: 'signup', component: SignupComponent,
     data: { breadcrumb: 'Sign up' },
-    canActivate: []
+    canActivate: [AccessGuard]
   },
   {
     path: 'inbox', component: InboxComponent,
     data: { breadcrumb: 'Inbox' },
-    canActivate: []
+    canActivate: [AccessGuard]
   },
   {
     path: 'myestates', component: MyEstatesComponent,
     data: { breadcrumb: 'My Estates' },
-    canActivate: []
+    canActivate: [AccessGuard]
   },
   {
     path: 'newestate', component: NewEstateComponent,
     data: { breadcrumb: 'New Estate' },
-    canActivate: []
+    canActivate: [AccessGuard]
   },
   {
     path: 'usersettings', component: UserSettingsComponent,
     data: { breadcrumb: 'Settings' },
-    canActivate: []
+    canActivate: [AccessGuard]
   },
   {
     path: 'chat/:id/:usr', component: ChatComponent,
     data: { breadcrumb: 'Chat' },
-    canActivate: []
+    canActivate: [AccessGuard]
   },
   {
     path: 'chat/:id', component: ChatComponent,
     data: { breadcrumb: 'Chat' },
-    canActivate: []
+    canActivate: [AccessGuard]
   },
   {
     path: 'estate/:id', component: EstatePageComponent,
     data: { breadcrumb: 'Estate' },
-    canActivate: []
+    canActivate: [AccessGuard]
+  },
+  {
+    path: 'userrequests', component: UserRequestsComponent,
+    data: { breadcrumb: 'User Requests' },
+    canActivate: [AccessGuard]
+  },
+  {
+    path: '**', redirectTo: ''
   },
 ];
 

@@ -6,36 +6,29 @@
         <div flex>
             <mat-form-field appearance="fill">
                 <mat-label>Old Password</mat-label>
-                <input matInput type="password">
+                <input matInput required type="password" [(ngModel)]="password">
+                <mat-hint class="err-msg">{{passwordErr}}</mat-hint>
             </mat-form-field>
         </div>
         <br>
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>New Password</mat-label>
-                <input matInput type="password">
+                <input matInput required type="password" [(ngModel)]="newpassword">
+                <mat-hint class="err-msg">{{newpasswordErr}}</mat-hint>
             </mat-form-field>
         </div>
         <br>
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>Confirm New Password</mat-label>
-                <input matInput type="password">
+                <input matInput required type="password" [(ngModel)]="confirmPass">
+                <mat-hint class="err-msg">{{confirmPassErr}}</mat-hint>
             </mat-form-field>
         </div>
         <div>
-            <button mat-raised-button color="accent">Submit</button>
+            <button mat-raised-button color="accent" (click)="submit()">Submit</button>
         </div>
         <br>
-        <div flex *ngIf="true" class="validation">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Log in failed
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <p>I'm visible because I am open</p>
-            </mat-expansion-panel>
-        </div>
     </div>
 </div>

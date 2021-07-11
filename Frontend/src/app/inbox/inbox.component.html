@@ -6,7 +6,7 @@
                     <mat-list-item (click)="gotoChat(c)" class="chat">
                         Chat: {{c.estate.name}}
                         <br>
-                        {{c.isOwner?c.chat.username:(c.estate.isOwnedByAgency?c.estate.agency:c.estate.owner)}}
+                        {{c.isOwner?c.chat.username:(c.estate.isOwnedByAgency?'Houses and stuff':c.estate.owner)}}
                     </mat-list-item>
                     <mat-divider></mat-divider>
                 </div>
@@ -19,7 +19,7 @@
                     <mat-list-item (click)="gotoChat(c)" class="chat">
                         Chat: {{c.estate.name}}
                         <br>
-                        {{c.isOwner?c.chat.username:(c.estate.isOwnedByAgency?c.estate.agency:c.estate.owner)}}
+                        {{c.isOwner?c.chat.username:(c.estate.isOwnedByAgency?'Houses and stuff':c.estate.owner)}}
                     </mat-list-item>
                     <mat-divider></mat-divider>
                 </div>

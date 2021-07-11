@@ -33,7 +33,8 @@ export class UserService {
   }
 
   getUnverifiedUsers() {
-    return this.http.get(`${this.uri}/unverified`, null);
+    let data = {};
+    return this.http.get(`${this.uri}/unverified`, data);
   }
 
   getAllUsers() {
@@ -49,11 +50,12 @@ export class UserService {
     return this.http.post(`${this.uri}/edituser`, data);
   }
 
-  changePassword(username: string, oldpass: string, newpass, string) {
+  changePassword(username: string, password: string, newpass: string) {
       let data = {
         username: username,
-        password: newpass
-      }
+        password: password,
+        newpassword: newpass,
+      };
     return this.http.post(`${this.uri}/changepass`, data);
   }
 
@@ -78,5 +80,19 @@ export class UserService {
       img: image
     }
     return this.http.post(`${this.uri}/setimage`, data);
+  }
+
+  accept(username: string) {
+    let data = {
+      username: username,
+    }
+    return this.http.post(`${this.uri}/acceptuser`, data);
+  }
+
+  reject(username: string) {
+    let data = {
+      username: username,
+    }
+    return this.http.post(`${this.uri}/rejectuser`, data);
   }
 }

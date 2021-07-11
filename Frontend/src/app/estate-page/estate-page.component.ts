@@ -30,6 +30,15 @@ export class EstatePageComponent implements OnInit {
     this.router.navigate(['/chat', this.estate._id]);
   }
 
+  promote() {
+    this.estateService.promote(this.estate._id).subscribe((res: any) => {
+      if (res.status === 'OK')
+      {
+        this.estate.isPromoted = !this.estate.isPromoted;
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.activatedRoute.params.subscribe(params => {
@@ -47,11 +56,8 @@ export class EstatePageComponent implements OnInit {
           );
 
         });
-        this.canContact = this.estate.ownedByAgency &&
-          this.user.userType === "agent" &&
-          this.user.agencyName === this.estate.agency;
-        this.canContact ||= !this.estate.ownedByAgency && this.user.username === this.estate.owner;
-        this.canContact = !this.canContact;
+        this.canContact = this.estate.ownedByAgency && this.user.userType === 'regular' ||
+          !this.estate.ownedByAgency && this.user.username !== this.estate.owner;
         this.isLoaded = true;
        });
     });

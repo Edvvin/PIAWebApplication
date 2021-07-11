@@ -26,13 +26,11 @@ export class ChatMessageComponent implements OnInit {
   ngOnInit(): void {
     let user = JSON.parse(localStorage.getItem('user'));
     this.isRight = (this.message.sender === user.username);
-    if(this.isRight){
-      this.name = 'You';
-    } else{
-      if(this.isAgency && !this.isOwner){
+    if (!this.isRight) {
+      if (this.isAgency && !this.isOwner) {
         this.name = 'Owner';
       }
-      else{
+      else {
         this.name = this.message.sender;
       }
     }

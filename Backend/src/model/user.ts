@@ -25,11 +25,8 @@ let User = new Schema({
     userType : {
         type: String,
     },
-    agencyName : {
-        type : String,
-    },
     isVerified : {
-        type: Boolean,
+        type: String,
     },
     image: {
         type: String,

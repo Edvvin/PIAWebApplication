@@ -6,7 +6,6 @@ export class User {
     country: string;
     city: string;
     userType: string;
-    agencyName: string;
-    isVerified: boolean;
+    isVerified: string;
     image: string;
 }

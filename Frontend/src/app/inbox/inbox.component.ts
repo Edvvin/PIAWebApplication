@@ -27,8 +27,10 @@ export class InboxComponent implements OnInit {
     if (this.user) {
       this.estateService.getAllEstates().subscribe((res: any) => {
         res.forEach((e: Estate) => {
-          if ((this.user.username === e.owner && !e.ownedByAgency) ||
-            (this.user.agencyName === e.agency && e.ownedByAgency)) {
+          if (
+            (!e.ownedByAgency && this.user.username === e.owner) ||
+            (e.ownedByAgency && this.user.userType !== 'regular')
+            ) {
             e.chats.forEach((c: Chat) => {
               if (c.isArchivedByOwner) {
                 this.archivedChats.push({
@@ -68,7 +70,7 @@ export class InboxComponent implements OnInit {
 
           }
         });
-        this.archivedChats.sort((c1, c2) => c2.chat.time.getTime() - c1.chat.time.getTime());
+        this.archivedChats.sort((c1, c2) => new Date(c2.chat.time).getTime() - new Date(c1.chat.time).getTime());
         this.inboxChats.sort((c1, c2) => new Date(c2.chat.time).getTime() - new Date(c1.chat.time).getTime());
         this.isLoaded = true;
       });

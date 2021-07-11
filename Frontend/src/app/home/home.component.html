@@ -1,4 +1,3 @@
-<!-- <app-estate-card [estate]="estate"></app-estate-card> -->
 <div class="search-bar">
     <div>
         <mat-form-field appearance="fill">
@@ -18,6 +17,13 @@
         </mat-form-field>
         <button mat-fab (click)="search()"><mat-icon>search</mat-icon></button>
     </div>
+</div>
+<div class="search-promoted" *ngIf="promotedResults.length>0">
+    <carousel [dots]="true">
+        <div *ngFor="let res of promotedResults">
+            <app-gallery-cell [estate]="res"></app-gallery-cell>
+        </div>
+    </carousel>
 </div>
 <div class="search-results">
     <div class="single-result" *ngFor='let res of searchResults'>

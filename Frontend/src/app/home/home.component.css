@@ -17,6 +17,10 @@
     color: red;
 }
 
+.search-promoted > * {
+    z-index: 0;
+}
+
 .search-results {
     display: inline-flex;
     flex-wrap: wrap;
@@ -25,4 +29,8 @@
 
 .search-result{
     width: 300px;
+}
+
+.search-promoted {
+    cursor: pointer !important;
 }

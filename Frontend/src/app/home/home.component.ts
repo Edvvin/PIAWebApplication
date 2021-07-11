@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   lowerErr: string;
   upperErr: string;
   searchResults = [];
+  promotedResults = [];
 
   ngOnInit(): void {
     this.estate = new Estate();
@@ -75,7 +76,14 @@ export class HomeComponent implements OnInit {
     this.estateService.estateSearch(tempC, tempL, tempU).subscribe((res: any) => {
       if(res.status === "OK") {
         this.searchResults = res.estates;
-        console.log(this.searchResults);
+        if (JSON.parse(localStorage.getItem('user'))){
+          this.promotedResults = [];
+          this.searchResults.forEach((e: Estate) => {
+            if (e.isPromoted) {
+              this.promotedResults.push(e);
+            }
+          });
+      }
       }
       else{
       }

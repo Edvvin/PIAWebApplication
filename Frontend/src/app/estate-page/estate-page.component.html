@@ -5,10 +5,8 @@
             <img [src]="img" alt="Photo of estate">
         </div>
     </carousel>
-    <div *ngIf="!estate.ownedByAgency">
-        <h2> Owner: {{estate.owner}} </h2>
-    </div>
-    <h2>Agency: {{estate.agency}}</h2>
+    <h2> Owner: {{estate.ownedByAgency?'Houses and stuff':estate.owner}} </h2>
+    <button *ngIf="user.userType !== 'regular'" mat-raised-button color="primary" (click)="promote()">{{!estate.isPromoted?'Promote':'Unpromote'}}</button>
     <button *ngIf="canContact" mat-raised-button color="accent" (click)="gotoContact()">Contact us</button>
     <br>
     <br>

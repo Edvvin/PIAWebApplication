@@ -18,3 +18,7 @@
 .validation > * {
     background-color: #f44336;;
 }
+
+.err-msg {
+    color: red;
+}

@@ -45,9 +45,6 @@ let Estate = new Schema({
     owner: {
         type: String,
     },
-    agency: {
-        type: String,
-    },
     ownedByAgency: {
         type: Boolean,
     },

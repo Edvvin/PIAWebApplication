@@ -14,7 +14,6 @@ export class Estate{
     isForSale : boolean;
     price : number;
     owner: string;
-    agency: string;
     ownedByAgency: boolean;
     isPromoted: boolean;
     chats: Chat[];

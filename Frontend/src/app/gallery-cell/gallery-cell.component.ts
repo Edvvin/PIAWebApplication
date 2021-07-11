@@ -1,34 +1,33 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {Estate} from '../data/estate';
-import { UserService } from '../services/user.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { User } from '../data/user';
 import { Router } from '@angular/router';
+import { Estate } from '../data/estate';
+import { User } from '../data/user';
+import { UserService } from '../services/user.service';
 
 @Component({
-  selector: 'app-estate-card',
-  templateUrl: './estate-card.component.html',
-  styleUrls: ['./estate-card.component.css']
+  selector: 'app-gallery-cell',
+  templateUrl: './gallery-cell.component.html',
+  styleUrls: ['./gallery-cell.component.css']
 })
-export class EstateCardComponent implements OnInit {
 
-  constructor( private userService: UserService, private sanitizer: DomSanitizer, private router: Router) {
-   }
+
+export class GalleryCellComponent implements OnInit {
+
+  constructor(private userService: UserService, private sanitizer: DomSanitizer, private router: Router) { }
 
   @Input()
-  estate : Estate;
+  estate: Estate;
 
-  imgUrl;
+  user: User;
 
-  rooms : number[];
+  imgUrl: any;
 
   getRandomInt(max){
     return Math.floor(Math.random() * max);
   }
 
   ngOnInit(): void {
-    this.rooms = Array(this.estate.numberOfRooms).fill(0);
-
     if (this.estate.images.length > 0) {
       var file = this.estate.images[this.getRandomInt(this.estate.images.length)];
       this.userService.download(file).subscribe(
@@ -41,9 +40,9 @@ export class EstateCardComponent implements OnInit {
     }
   }
 
-  openCard(){
-    let u: User = JSON.parse(localStorage.getItem('user'));
-    if (u){
+  gotoEstate () {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if(this.user){
       this.router.navigate(['/estate', this.estate._id]);
     }
   }
