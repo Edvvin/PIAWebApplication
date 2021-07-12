@@ -34,3 +34,8 @@
 .search-promoted {
     cursor: pointer !important;
 }
+
+.charts{
+    background-color: white;
+    margin-right: 18px;
+}
