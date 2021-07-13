@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../data/user';
 import { UserService } from '../services/user.service';
@@ -27,78 +27,81 @@ export class SignupComponent implements OnInit {
   cityErr: string;
   country: string;
   countryErr: string;
-  selectedFiles : any;
+  selectedFiles: any;
+  isAgent: boolean;
+  user: User;
 
   ngOnInit(): void {
     this.selectedFiles = null;
+    this.user = JSON.parse(localStorage.getItem('user'));
   }
 
   selectFile(event) {
     this.selectedFiles = event.target.files;
-    let temp : any = this.selectedFiles;
-    if(temp.length === 0) {
+    let temp: any = this.selectedFiles;
+    if (temp.length === 0) {
       this.selectedFiles = null;
     }
     console.log(event.target.files);
   }
 
-  signup(){
+  signup() {
     let isBad = false;
-    if(this.name===undefined || this.name.length === 0){
+    if (this.name === undefined || this.name.length === 0) {
       this.nameErr = 'Name is required';
       isBad = true;
     }
-    else{
+    else {
       this.nameErr = '';
     }
-    if(this.name === "admin"){
+    if (this.name === "admin") {
       this.nameErr = 'user cannot be called admin';
       isBad = true;
     }
-    if(this.surname===undefined || this.surname.length === 0){
+    if (this.surname === undefined || this.surname.length === 0) {
       this.surnameErr = 'Surname is required';
       isBad = true;
     }
-    else{
+    else {
       this.surnameErr = '';
     }
-    if(this.username===undefined || this.username.length === 0){
+    if (this.username === undefined || this.username.length === 0) {
       this.usernameErr = 'username is required';
       isBad = true;
     }
-    else{
+    else {
       this.usernameErr = '';
     }
-    if(this.city===undefined || this.city.length === 0){
+    if (this.city === undefined || this.city.length === 0) {
       this.cityErr = 'City is required';
       isBad = true;
     }
-    else{
+    else {
       this.cityErr = '';
     }
-    if(this.country===undefined || this.country.length === 0){
+    if (this.country === undefined || this.country.length === 0) {
       this.countryErr = 'country is required';
       isBad = true;
     }
-    else{
+    else {
       this.countryErr = '';
     }
-    if(!this.passwordCheck.test(this.password)){
+    if (!this.passwordCheck.test(this.password)) {
       this.passwordErr = 'Password bad';
       isBad = true;
     }
-    else{
+    else {
       this.passwordErr = '';
     }
-    if(this.password !== this.confirmPass){
+    if (this.password !== this.confirmPass) {
       this.confirmPassErr = 'Does not match';
       isBad = true;
     }
-    else{
+    else {
       this.confirmPassErr = '';
     }
 
-    if(isBad) {
+    if (isBad) {
       return;
     }
 
@@ -110,11 +113,11 @@ export class SignupComponent implements OnInit {
     user.country = this.country;
     user.password = this.password;
     user.isVerified = 'unverified';
-    user.userType = 'regular';
+    user.userType = this.isAgent ? 'agent' : 'regular';
     user.image = '';
 
     this.userService.register(user).subscribe((res: any) => {
-      if (res.status === 'FAIL'){
+      if (res.status === 'FAIL') {
         this.usernameErr = res.message;
       } else {
         if (this.selectedFiles != null) {
@@ -126,11 +129,16 @@ export class SignupComponent implements OnInit {
                 alert('image not set');
               }
             });
-            },
+          },
             (err) => console.log(err)
           );
         }
-        this.router.navigate(['/login']);
+        if (user && user.userType !== 'admin') {
+          this.router.navigate(['/login']);
+        }
+        else {
+          this.router.navigate(['/allusers']);
+        }
       }
     });
 

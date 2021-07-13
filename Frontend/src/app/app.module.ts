@@ -25,6 +25,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { EstatePageComponent } from './estate-page/estate-page.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { GalleryCellComponent } from './gallery-cell/gallery-cell.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { AllUsersComponent } from './all-users/all-users.component';
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import { GalleryCellComponent } from './gallery-cell/gallery-cell.component';
     ChatMessageComponent,
     EstatePageComponent,
     GalleryCellComponent,
+    EditUserComponent,
+    AllUsersComponent,
   ],
   imports: [
     BrowserModule,

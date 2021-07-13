@@ -28,6 +28,12 @@ let User = new Schema({
     isVerified : {
         type: String,
     },
+    blockedBy : {
+        type: [String],
+    },
+    blockedByAgency : {
+        type: String,
+    },
     image: {
         type: String,
     },

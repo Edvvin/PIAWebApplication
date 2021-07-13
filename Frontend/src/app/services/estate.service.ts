@@ -127,4 +127,12 @@ export class EstateService {
     return this.http.post(`${this.uri}/promote`, data);
   }
 
+  myestates(username: string) {
+    let data = {
+      username: username,
+    };
+
+    return this.http.post(`${this.uri}/myestates`, data);
+  }
+
 }

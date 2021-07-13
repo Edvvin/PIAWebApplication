@@ -1,0 +1,19 @@
+<div class="users">
+    <div *ngFor="let u of users" class="single">
+        <div class="card">
+            <div class="card-header">
+                <h3>{{u.user.username}}</h3>
+            </div>
+            <img *ngIf="u.imgUrl" [src]='u.imgUrl' alt="Photo of User">
+            <img *ngIf="!u.imgUrl" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+            <div class="container">
+                <div class="info-line">Name: {{u.user.name}}</div>
+                <br>
+                <div class="info-line">Surname: {{u.user.surname}} </div>
+                <br>
+                <a mat-raised-button color="" [routerLink]="'/edituser/'+u.user.username">Edit User</a>
+                <button *ngIf="u.user.userType !== 'admin'" class='kill' mat-raised-button color="warn" (click)="kill(u.user)">Kill</button>
+            </div>
+        </div>
+    </div>
+</div>

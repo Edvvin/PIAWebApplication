@@ -6,6 +6,7 @@
                 <mat-icon>navigate_before</mat-icon>
             </a>
             <a mat-list-item routerLink=''>Home Page</a>
+            <a mat-list-item routerLink='myestates' *ngIf="!isGuest">My Estates</a>
 
             <mat-expansion-panel *ngIf="isAdmin">
                 <mat-expansion-panel-header>
@@ -16,6 +17,8 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <a mat-list-item routerLink='/userrequests' routerLinkActive="active-list-item">User Requests</a>
+                <a mat-list-item routerLink='/allusers' routerLinkActive="active-list-item">All Users</a>
+                <a mat-list-item routerLink='/adduser' routerLinkActive="active-list-item">Add user</a>
             </mat-expansion-panel>
         </mat-nav-list>
     </mat-sidenav>
@@ -32,7 +35,8 @@
                             {{user.name}} &nbsp; {{user.surname}}
                         </button>
                         <mat-menu #menu_example="matMenu">
-                            <a mat-menu-item routerLink='usersettings'>Account settings</a>
+                            <a mat-menu-item routerLink='usersettings'>Change password</a>
+                            <a mat-menu-item [routerLink]="'edituser/'+user.username">Edit User</a>
                             <a mat-menu-item (click)="logout()">Log out</a>
                         </mat-menu>
                         <button mat-button routerLink='inbox'>Inbox</button>

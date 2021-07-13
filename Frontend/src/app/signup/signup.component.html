@@ -64,6 +64,9 @@
             <mat-hint class='error-msg'>{{cityErr}}</mat-hint>
         </mat-form-field>
     </div>
+    <div flex *ngIf="user && user.userType === 'admin'">
+        <mat-slide-toggle [(ngModel)]="isAgent">Agent</mat-slide-toggle>
+    </div>
     <div flex>
         <button mat-raised-button color="accent" (click)='signup()'>Submit</button>
     </div>

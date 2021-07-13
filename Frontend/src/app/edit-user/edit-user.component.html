@@ -1,0 +1,36 @@
+<span class='signup-label'>
+    <h1>Edit User</h1>
+</span>
+<div layout="column" class = "signup-form">
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput required [(ngModel)]='name'>
+            <mat-hint class='error-msg'>{{nameErr}}</mat-hint>
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Surname</mat-label>
+            <input matInput required [(ngModel)]='surname'>
+            <mat-hint class='error-msg'>{{surnameErr}}</mat-hint>
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>Country</mat-label>
+            <input matInput  required [(ngModel)]='country'>
+            <mat-hint class='error-msg'>{{countryErr}}</mat-hint>
+        </mat-form-field>
+    </div>
+    <div flex>
+        <mat-form-field appearance="fill">
+            <mat-label>City/Town</mat-label>
+            <input matInput required [(ngModel)]='city'>
+            <mat-hint class='error-msg'>{{cityErr}}</mat-hint>
+        </mat-form-field>
+    </div>
+    <div flex>
+        <button mat-raised-button color="accent" (click)='signup()'>Submit</button>
+    </div>
+</div>

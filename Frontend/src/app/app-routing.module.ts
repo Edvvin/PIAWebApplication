@@ -11,6 +11,8 @@ import { EstatePageComponent } from './estate-page/estate-page.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { UserRequestsComponent } from './user-requests/user-requests.component';
 import { AccessGuard } from './access.guard';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { AllUsersComponent } from './all-users/all-users.component';
 
 
 const routes: Routes = [
@@ -66,6 +68,21 @@ const routes: Routes = [
   {
     path: 'userrequests', component: UserRequestsComponent,
     data: { breadcrumb: 'User Requests' },
+    canActivate: [AccessGuard]
+  },
+  {
+    path: 'edituser/:username', component: EditUserComponent,
+    data: { breadcrumb: 'Edit User' },
+    canActivate: [AccessGuard]
+  },
+  {
+    path: 'allusers', component: AllUsersComponent,
+    data: { breadcrumb: 'All Users' },
+    canActivate: [AccessGuard]
+  },
+  {
+    path: 'adduser', component: SignupComponent,
+    data: { breadcrumb: 'Add User' },
     canActivate: [AccessGuard]
   },
   {

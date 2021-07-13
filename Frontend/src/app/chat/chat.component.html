@@ -8,7 +8,7 @@
                 </button>
                 <mat-menu #moreopts="matMenu">
                     <button (click)="archive()" mat-menu-item>{{isArchived?'Unarchive':'Archive'}}</button>
-                    <a mat-menu-item>Block/Unblock</a>
+                    <button *ngIf="isOwner || !estate.isOwnedByAgency" (click)="block()" mat-menu-item>{{otherBlocked?'Unblock':'Block'}}</button>
                 </mat-menu>
             </div>
         </div>
@@ -30,19 +30,19 @@
         <div class="bottom">
             <mat-form-field class="messagebox" appearance="fill">
                 <mat-label>Message</mat-label>
-                <textarea matInput [(ngModel)]="msgText"></textarea>
+                <textarea matInput [(ngModel)]="msgText" [disabled]="isBlocked"></textarea>
             </mat-form-field>
-            <button mat-fab (click)="sendMessageClick()">
+            <button mat-fab (click)="sendMessageClick()" [disabled]="isBlocked">
                 <mat-icon>send</mat-icon>
             </button>
             <div *ngIf="!estate.sold" class="sold">
                 <div class="offerbox" *ngIf="!isOwner; else ownerElse">
                     <mat-form-field appearance="fill">
                         <mat-label>Offer</mat-label>
-                        <input matInput type="number" [(ngModel)]="offer">
+                        <input matInput type="number" [(ngModel)]="offer" [disabled]="isBlocked">
                         <mat-hint>Current offer: {{currentOffer}}</mat-hint>
                     </mat-form-field>
-                    <button mat-fab (click)="sendOfferClick()">
+                    <button mat-fab (click)="sendOfferClick()" [disabled]="isBlocked">
                         <mat-icon>local_offer</mat-icon>
                     </button>
                     <div class="offer">
@@ -55,17 +55,17 @@
                             <mat-date-range-picker #picker></mat-date-range-picker>
                         </mat-form-field>
                     </div>
-                    <button *ngIf="!estate.isForSale" mat-fab (click)="picker.open()" [color]="btnerr">
+                    <button *ngIf="!estate.isForSale" mat-fab (click)="picker.open()" [color]="btnerr" [disabled]="isBlocked">
                         <mat-icon>calendar_today</mat-icon>
                     </button>
                 </div>
                 <ng-template #ownerElse>
                     <div class="offerbox" *ngIf="currentOffer">
                         <p> Current offer: {{currentOffer}}</p>
-                        <button mat-fab (click)="acceptOffer()">
+                        <button mat-fab (click)="acceptOffer()" [disabled]="isBlocked">
                             <mat-icon>check</mat-icon>
                         </button>
-                        <button mat-fab (click)="declineOffer()" color="warn">
+                        <button mat-fab (click)="declineOffer()" color="warn" [disabled]="isBlocked">
                             <mat-icon>close</mat-icon>
                         </button>
                     </div>

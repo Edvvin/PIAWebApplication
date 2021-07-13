@@ -30,25 +30,25 @@ const storage = multer.diskStorage({
     },
 });
 
-var upload=multer({storage:storage});
+var upload = multer({ storage: storage });
 
-router.route('/login').post((req, res) =>{
-    let username=req.body.username;
-    let password=req.body.password;
+router.route('/login').post((req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
 
-    user.findOne({'username':username}, (err,usr: any) => {
-        if(err){
+    user.findOne({ 'username': username }, (err, usr: any) => {
+        if (err) {
             console.log(err);
         } else {
             if (usr) {
-                if(usr.password === password){
+                if (usr.password === password) {
                     let data = {
                         user: usr,
                         status: "OK",
                         message: "Log in successful.",
                     };
                     res.json(data);
-                } else{
+                } else {
                     let data = {
                         user: usr,
                         status: "FAIL",
@@ -67,32 +67,32 @@ router.route('/login').post((req, res) =>{
     });
 });
 
-router.route('/changepass').post((req, res) =>{
+router.route('/changepass').post((req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     let newpassword = req.body.newpassword;
 
-    user.findOne({'username': username}, (err, usr: any) => {
-        if(err){
+    user.findOne({ 'username': username }, (err, usr: any) => {
+        if (err) {
             console.log(err);
         } else {
             if (usr) {
                 if (usr.password === password) {
                     usr.password = newpassword;
-                    usr.save().then(()=>{
+                    usr.save().then(() => {
                         let data = {
                             status: "OK",
                             message: "Change successful",
                         };
                         res.json(data);
-                    }).catch(()=>{
+                    }).catch(() => {
                         let data = {
                             status: "FAIL",
                             message: "Change failed",
                         };
                         res.json(data);
                     });
-                } else{
+                } else {
                     let data = {
                         status: "FAIL",
                         message: "Password wrong",
@@ -110,14 +110,14 @@ router.route('/changepass').post((req, res) =>{
     });
 });
 
-router.route('/register').post((req, res) =>{
-    let u : any = new user(req.body);
-    user.findOne({'username':u.username}, (err,usr) => {
-        if(err){
+router.route('/register').post((req, res) => {
+    let u: any = new user(req.body);
+    user.findOne({ 'username': u.username }, (err, usr) => {
+        if (err) {
             console.log(err);
             return;
         }
-        if(usr){
+        if (usr) {
             let data = {
                 status: "FAIL",
                 message: "Username: " + u.username + " already exists",
@@ -141,7 +141,7 @@ router.route('/register').post((req, res) =>{
     });
 });
 
-router.route('/verifyuser').post((req, res) =>{
+router.route('/verifyuser').post((req, res) => {
     let username = req.body.username;
     user.findOne({ 'username': username }, (err, u) => {
         if (err) {
@@ -149,31 +149,32 @@ router.route('/verifyuser').post((req, res) =>{
         } else {
             if (u) {
                 user.collection.updateOne({ "username": username },
-                 { $set: {'isVerified' : 'unverified'} });
+                    { $set: { 'isVerified': 'unverified' } });
                 res.json({ 'message': 'Successfully verified user' });
             } else {
-                res.json({ 'message': 'user: ' + username + 'not found'});
+                res.json({ 'message': 'user: ' + username + 'not found' });
             }
         }
     });
 });
 
 
-router.route('/unverified').get((req, res) =>{
-    user.find({isVerified: 'unverified'}, (err, u) =>{
-        if(err) {
+router.route('/unverified').get((req, res) => {
+    user.find({ isVerified: 'unverified' }, (err, u) => {
+        if (err) {
             console.log(err);
         } else {
-           res.json(u);
+            res.json(u);
         }
-    }); });
+    });
+});
 
-router.route('/allusers').get((req, res) =>{
-    user.find({}, (err, u) =>{
-        if(err) {
+router.route('/allusers').get((req, res) => {
+    user.find({}, (err, u) => {
+        if (err) {
             console.log(err);
         } else {
-           res.json(u);
+            res.json(u);
         }
     });
 });
@@ -207,12 +208,12 @@ router.route('/archivechat').post(
                 } else {
                     let chat = e.chats.find((c: any) => c.username === username);
                     if (chat) {
-                        if(isOwner){
+                        if (isOwner) {
                             chat.isArchivedByOwner = !chat.isArchivedByOwner;
-                        } else{
+                        } else {
                             chat.isArchivedByCustomer = !chat.isArchivedByCustomer;
                         }
-                        e.save().then((e: any)=>{
+                        e.save().then((e: any) => {
                             let data = {
                                 status: 'OK',
                             };
@@ -395,7 +396,7 @@ router.route('/sendtoowner').post((req, res) => {
                 res.json(data);
             } else {
                 let chat = res1.chats.find((c: any) => (c.username === fromUser));
-                chat.messages.push( { text: message, fromClient: true, sender: fromUser, time: new Date()});
+                chat.messages.push({ text: message, fromClient: true, sender: fromUser, time: new Date() });
                 chat.time = new Date();
                 chat.isArchivedByCustomer = false;
                 chat.isArchivedByOwner = false;
@@ -432,7 +433,7 @@ router.route('/sendtoclient').post((req, res) => {
                 res.json(data);
             } else {
                 let chat = res1.chats.find((c: any) => (c.username === toUser))
-                chat.messages.push({ text: message, fromClient: true, sender: fromUser, time: (new Date())});
+                chat.messages.push({ text: message, fromClient: true, sender: fromUser, time: (new Date()) });
                 chat.time = new Date();
                 chat.isArchivedByCustomer = false;
                 chat.isArchivedByOwner = false;
@@ -625,22 +626,22 @@ router.route('/declineoffer').post((req, res) => {
 
 router.route('/acceptuser').post((req, res) => {
     let username = req.body.username;
-    user.findOne({username: username}, (err, usr: any) => {
-        if(usr){
+    user.findOne({ username: username }, (err, usr: any) => {
+        if (usr) {
             usr.isVerified = 'verified';
-            usr.save().then(()=>{
+            usr.save().then(() => {
                 let data = {
                     status: 'OK',
                 };
                 res.json(data);
-            }).catch((e: any)=>{
+            }).catch((e: any) => {
                 console.log(e);
                 let data = {
                     status: 'FAIL',
                 };
                 res.json(data);
             });
-        } else{
+        } else {
             let data = {
                 status: 'FAIL',
             };
@@ -651,13 +652,13 @@ router.route('/acceptuser').post((req, res) => {
 
 router.route('/rejectuser').post((req, res) => {
     let username = req.body.username;
-    user.findOneAndRemove({username: username}, (err, usr: any) => {
-        if(usr){
+    user.findOneAndRemove({ username: username }, (err, usr: any) => {
+        if (usr) {
             let data = {
                 status: 'OK',
             };
             res.json(data);
-        } else{
+        } else {
             let data = {
                 status: 'FAIL',
             };
@@ -685,6 +686,103 @@ router.route('/promote').post((req, res) => {
     });
 });
 
+router.route('/myestates').post((req, res) => {
+    let username = req.body.username;
+    estate.find({ owner: username }, (err, est) => {
+        if (err) {
+            console.log('Error');
+        } else {
+            res.json(est);
+        }
+    });
+});
+
+router.route('/getuser').post((req, res) => {
+    let username = req.body.username;
+    user.findOne({ username: username }, (err, usr) => {
+        if (err) {
+            console.log('Error');
+        } else {
+            res.json(usr);
+        }
+    });
+});
+
+router.route('/edituser').post((req, res) => {
+    let username = req.body.username;
+    let newuser = req.body.user;
+    user.findOne({ username: username }, (err: any, usr: any) => {
+        if (err) {
+            console.log('Error');
+        } else {
+            if (usr) {
+                usr.name = newuser.name;
+                usr.surname = newuser.surname;
+                usr.country = newuser.country;
+                usr.city = newuser.city;
+                usr.save().then(() => {
+                    let data = {
+                        status: 'OK',
+                    };
+                    res.json(data);
+
+                }).catch((err: any) => {
+                    console.log('Error');
+                });
+            }
+        }
+    });
+});
+
+router.route('/block').post((req, res) => {
+    let blocker = req.body.blocker;
+    let blocked = req.body.blocked;
+    let isAgency = req.body.isAgency;
+    user.findOne({ username: blocked }, (err, usr: any) => {
+        if (err) {
+            console.log('Error');
+        }
+        else {
+            if (usr) {
+                if (isAgency) {
+                    if(usr.blockedByAgency){
+                        usr.blockedByAgency = false;
+                    }
+                    else{
+                        usr.blockedByAgency = true;
+                    }
+                }
+                else {
+                    if (usr.blockedBy) {
+                        let ind = usr.blockedBy.findIndex((e: any) => e === blocker);
+                        if (ind !== -1) {
+                            usr.blockedBy.splice(ind);
+                        } else {
+                            usr.blockedBy.push(blocker);
+                        }
+                    }
+                    else {
+                        usr.blockedBy = [blocker];
+                    }
+                }
+                usr.save().then(()=>{
+                    let data = {
+                        status: 'OK',
+                    };
+                    res.json(data);
+                }).catch((err: any) => {
+                    let data = {
+                        status: 'FAIL',
+                    };
+                    res.json(data);
+                });
+            }
+            else {
+                console.log('Error');
+            }
+        }
+    })
+});
 
 //app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/', router);

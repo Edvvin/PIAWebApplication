@@ -207,14 +207,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.estateService.estateSearch(tempC, tempL, tempU).subscribe((res: any) => {
       if (res.status === "OK") {
         this.searchResults = res.estates;
-        if (JSON.parse(localStorage.getItem('user'))) {
-          this.promotedResults = [];
-          this.searchResults.forEach((e: Estate) => {
-            if (e.isPromoted) {
-              this.promotedResults.push(e);
-            }
-          });
-        }
+        this.promotedResults = [];
+        this.searchResults.forEach((e: Estate) => {
+          if (e.isPromoted) {
+            this.promotedResults.push(e);
+          }
+        });
       }
       else {
       }

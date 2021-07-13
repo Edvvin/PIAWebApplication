@@ -24,8 +24,9 @@ export class AccessGuard implements CanActivate {
       }
       return true;
     }
-    else if (access === 'inbox' || access === 'myestate'
-      || access === 'newestate' || access === 'usersettings' || access === 'estate') {
+    else if (access === 'inbox' || access === 'myestates'
+      || access === 'newestate' || access === 'usersettings'
+      || access === 'estate' || access === 'edituser') {
       if (user){
         return true;
       }
@@ -49,7 +50,7 @@ export class AccessGuard implements CanActivate {
         return false;
       }
     }
-    else if (access === 'userrequests'){
+    else if (access === 'userrequests' || access === 'allusers' || access === 'adduser'){
       if (user){
         if (user.userType === 'admin'){
           return true;

@@ -8,4 +8,6 @@ export class User {
     userType: string;
     isVerified: string;
     image: string;
+    blockedBy: string[];
+    blockedByAgency: boolean;
 }

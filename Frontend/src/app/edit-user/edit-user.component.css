@@ -1,0 +1,30 @@
+
+.signup-label{
+    margin-top: 5%;
+    justify-content: center;
+    display: flex;
+}
+.signup-form{
+    width: 100%;
+    margin-top: 5%;
+    justify-content: center;
+    padding-bottom: 5%;
+}
+.signup-form div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.signup-form div mat-form-field{
+    width: 30%;
+    justify-content: center;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.error-msg {
+    color: red;
+}

@@ -38,13 +38,22 @@ export class UserService {
   }
 
   getAllUsers() {
-    return this.http.get(`${this.uri}/allusers`, null);
+    let data = {};
+    return this.http.get(`${this.uri}/allusers`, data);
   }
 
-  editUser(oldUsername: String, newUser: User){
+  getUser(username: string) {
     let data = {
-      old: oldUsername,
-      new: newUser
+      username: username,
+    };
+
+    return this.http.post(`${this.uri}/getuser`, data);
+  }
+
+  editUser(username: string, user: User){
+    let data = {
+      username: username,
+      user: user,
     }
 
     return this.http.post(`${this.uri}/edituser`, data);
@@ -95,4 +104,15 @@ export class UserService {
     }
     return this.http.post(`${this.uri}/rejectuser`, data);
   }
+
+  block(blocker: string, blocked: string, isAgency: boolean) {
+    let data = {
+      blocker: blocker,
+      blocked: blocked,
+      isAgency: isAgency,
+    };
+
+    return this.http.post(`${this.uri}/block`, data);
+  }
+
 }

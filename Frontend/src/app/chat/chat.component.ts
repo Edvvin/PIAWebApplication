@@ -32,15 +32,17 @@ export class ChatComponent implements OnInit {
   offer: number;
   currentOffer: number;
   isArchived: boolean;
+  isBlocked: boolean;
+  otherBlocked = false;
 
-  isAfter(date1: Date, date2: Date, orSame: boolean){
-    if(date1.getFullYear() > date2.getFullYear()){
+  isAfter(date1: Date, date2: Date, orSame: boolean) {
+    if (date1.getFullYear() > date2.getFullYear()) {
       return true;
     }
-    else if(date1.getFullYear() < date2.getFullYear()){
+    else if (date1.getFullYear() < date2.getFullYear()) {
       return false;
     }
-    else{
+    else {
       if (date1.getMonth() > date2.getMonth()) {
         return true;
       }
@@ -69,7 +71,7 @@ export class ChatComponent implements OnInit {
       let usr = params['usr'];
       this.estateService.getEstate(eid).subscribe((res: any) => {
         this.estate = res.estate;
-        if (usr){
+        if (usr) {
           this.isOwner = true;
           this.chat = this.estate.chats.find((c) => c.username === usr);
           this.toUser = usr;
@@ -77,15 +79,39 @@ export class ChatComponent implements OnInit {
           this.isOwner = false;
           this.chat = this.estate.chats.find((c) => c.username === this.user.username);
         }
-        if (this.chat){
+        if (this.chat) {
           this.chat.messages.reverse();
-          if (this.chat.offer){
+          if (this.chat.offer) {
             this.currentOffer = this.chat.offer.price;
           }
-          else{
+          else {
             this.currentOffer = undefined;
           }
           this.isArchived = this.isOwner ? this.chat.isArchivedByOwner : this.chat.isArchivedByCustomer;
+          this.isBlocked = false;
+          if (this.user.blockedByAgency && this.estate.ownedByAgency) {
+            this.isBlocked = true;
+          }
+          else if (this.user.blockedBy) {
+            let byWho = this.isOwner ? this.toUser : this.estate.owner;
+            if (this.user.blockedBy.find(e => e === byWho)) {
+              this.isBlocked = true;
+            }
+          }
+          if (this.isOwner || !this.estate.ownedByAgency) {
+            let withWho = this.isOwner ? this.toUser : this.estate.owner;
+            this.userService.getUser(withWho).subscribe((usr: any) => {
+              if (this.isOwner && this.estate.ownedByAgency) {
+                this.otherBlocked = usr.blockedByAgency;
+              }
+              else {
+                if (usr.blockedBy.find((e => e === this.user.username))) {
+                  this.otherBlocked = true;
+                  console.log('adsf');
+                }
+              }
+            });
+          }
         }
         this.secondDateChosen(true);
         this.btnerr = 'accent';
@@ -96,32 +122,32 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage(): void {
-        if (this.isOwner) {
-          this.estateService.sendMessageToClient(this.estate._id, this.user.username, this.toUser, this.msgText).subscribe((res: any)=>{
-            if (res.status === 'OK'){
-              this.chat.messages.unshift({ text: this.msgText, fromClient: false, sender: this.user.username, time: new Date()});
-              this.msgText = '';
-            }
-          });
-        } else {
-          this.estateService.sendMessageToOwner(this.estate._id, this.user.username, this.msgText).subscribe((res: any)=>{
-            if (res.status === 'OK'){
-              this.chat.messages.unshift({ text: this.msgText, fromClient: true, sender: this.user.username, time: new Date()});
-              this.msgText = '';
-            }
-          });
+    if (this.isOwner) {
+      this.estateService.sendMessageToClient(this.estate._id, this.user.username, this.toUser, this.msgText).subscribe((res: any) => {
+        if (res.status === 'OK') {
+          this.chat.messages.unshift({ text: this.msgText, fromClient: false, sender: this.user.username, time: new Date() });
+          this.msgText = '';
         }
+      });
+    } else {
+      this.estateService.sendMessageToOwner(this.estate._id, this.user.username, this.msgText).subscribe((res: any) => {
+        if (res.status === 'OK') {
+          this.chat.messages.unshift({ text: this.msgText, fromClient: true, sender: this.user.username, time: new Date() });
+          this.msgText = '';
+        }
+      });
+    }
   }
 
   sendMessageClick(): void {
     if (!this.chat) {
       let withWho = this.isOwner ? this.toUser : this.user.username;
       this.estateService.newChat(this.estate._id, withWho).subscribe((res: any) => {
-        if(res.status === "OK"){
+        if (res.status === "OK") {
           this.chat = res.chat;
           this.sendMessage();
         }
-        else{
+        else {
           console.log(res.message);
         }
       });
@@ -130,8 +156,8 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  sendOfferClick(){
-    if(!this.dateTo || !this.dateFrom){
+  sendOfferClick() {
+    if (!this.dateTo || !this.dateFrom) {
       this.btnerr = "warn";
       return;
     }
@@ -146,9 +172,9 @@ export class ChatComponent implements OnInit {
 
   }
 
-  sendOffer(){
+  sendOffer() {
     this.estateService.sendOffer(this.estate._id, this.user.username, this.dateFrom, this.dateTo, this.offer).subscribe((res: any) => {
-      if (res.status === 'OK'){
+      if (res.status === 'OK') {
         this.currentOffer = this.offer;
         this.offer = undefined;
       }
@@ -156,16 +182,16 @@ export class ChatComponent implements OnInit {
   }
 
   acceptOffer() {
-    this.estateService.acceptOffer(this.estate._id, this.toUser).subscribe((res: any)=>{
-      if (res.status === 'OK'){
+    this.estateService.acceptOffer(this.estate._id, this.toUser).subscribe((res: any) => {
+      if (res.status === 'OK') {
         this.currentOffer = undefined;
       }
     });
   }
 
-  declineOffer(){
-    this.estateService.declineOffer(this.estate._id, this.toUser).subscribe((res: any)=>{
-      if (res.status === 'OK'){
+  declineOffer() {
+    this.estateService.declineOffer(this.estate._id, this.toUser).subscribe((res: any) => {
+      if (res.status === 'OK') {
         this.currentOffer = undefined;
       }
     });
@@ -173,8 +199,8 @@ export class ChatComponent implements OnInit {
 
   firstOccupiedFound = false;
 
-  firstDateChosen(){
-    if(!this.dateFrom){
+  firstDateChosen() {
+    if (!this.dateFrom) {
       return;
     }
     this.firstOccupiedFound = false;
@@ -194,22 +220,22 @@ export class ChatComponent implements OnInit {
         });
         return ret;
       }
-      else{
+      else {
         return false;
       }
     };
 
   }
 
-  secondDateChosen(first: boolean){
-    if(!this.dateTo && !first){
+  secondDateChosen(first: boolean) {
+    if (!this.dateTo && !first) {
       return;
     }
     this.dateFilter = (date: Date) => {
-      if(!date){
+      if (!date) {
         return false;
       }
-      if(this.isAfter(new Date(), date, true)){
+      if (this.isAfter(new Date(), date, true)) {
         return false;
       }
       let ret = true;
@@ -226,11 +252,23 @@ export class ChatComponent implements OnInit {
     this.btnerr = 'accent';
   }
 
-  archive(){
+  archive() {
     let withWho = this.isOwner ? this.toUser : this.user.username;
     this.estateService.archiveChat(this.estate._id, withWho, this.isOwner).subscribe((res: any) => {
-      if (res.status === 'OK'){
+      if (res.status === 'OK') {
         this.isArchived = !this.isArchived;
+      }
+    });
+  }
+
+  block() {
+    let withWho = this.isOwner ? this.toUser : this.estate.owner;
+    this.userService.block(this.user.username, withWho, this.isOwner && this.estate.ownedByAgency).subscribe((res: any) => {
+      if (res.status === 'OK') {
+        this.otherBlocked = !this.otherBlocked;
+        if (this.otherBlocked !== this.isArchived) {
+          this.archive();
+        }
       }
     });
   }
