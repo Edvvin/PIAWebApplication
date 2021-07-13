@@ -27,6 +27,8 @@ import { GalleryCellComponent } from './gallery-cell/gallery-cell.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { VerifyEstatesComponent } from './verify-estates/verify-estates.component';
+import { SalesComponent } from './sales/sales.component';
+import { SetpercentComponent } from './setpercent/setpercent.component';
 
 
 @NgModule({
@@ -50,6 +52,8 @@ import { VerifyEstatesComponent } from './verify-estates/verify-estates.componen
     EditUserComponent,
     AllUsersComponent,
     VerifyEstatesComponent,
+    SalesComponent,
+    SetpercentComponent,
   ],
   imports: [
     BrowserModule,

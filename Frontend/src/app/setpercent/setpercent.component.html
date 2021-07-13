@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill">
+    <mat-label>Percent</mat-label>
+    <input matInput [(ngModel)]='percent' type="number">
+    <mat-hint class='error-msg'>{{err}}</mat-hint>
+</mat-form-field>
+<button mat-raised-button (click)="setpercent()">
+    Change
+</button>

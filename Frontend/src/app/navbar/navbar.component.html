@@ -7,6 +7,7 @@
             </a>
             <a mat-list-item routerLink=''>Home Page</a>
             <a mat-list-item routerLink='myestates' *ngIf="!isGuest">My Estates</a>
+            <a mat-list-item routerLink='newestate' *ngIf="!isGuest">New Estate</a>
 
             <mat-expansion-panel *ngIf="isAdmin || isAgent">
                 <mat-expansion-panel-header>
@@ -17,6 +18,7 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <a mat-list-item routerLink='/verifyestates' routerLinkActive="active-list-item">Verify Estates</a>
+                <a mat-list-item routerLink='/sales' routerLinkActive="active-list-item">Sales</a>
             </mat-expansion-panel>
 
             <mat-expansion-panel *ngIf="isAdmin">
@@ -30,6 +32,7 @@
                 <a mat-list-item routerLink='/userrequests' routerLinkActive="active-list-item">User Requests</a>
                 <a mat-list-item routerLink='/allusers' routerLinkActive="active-list-item">All Users</a>
                 <a mat-list-item routerLink='/adduser' routerLinkActive="active-list-item">Add user</a>
+                <a mat-list-item routerLink='/setpercent' routerLinkActive="active-list-item">Percent</a>
             </mat-expansion-panel>
         </mat-nav-list>
     </mat-sidenav>

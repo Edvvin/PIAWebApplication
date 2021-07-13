@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Estate } from '../data/estate';
 import { User } from '../data/user';
 import { EstateService } from '../services/estate.service';
@@ -11,7 +12,7 @@ import { UserService } from '../services/user.service';
 })
 export class NewEstateComponent implements OnInit {
 
-  constructor( private estateService: EstateService, private userService: UserService) { }
+  constructor( private estateService: EstateService, private userService: UserService, private router: Router) { }
 
   selectedFiles = [];
 
@@ -171,7 +172,8 @@ export class NewEstateComponent implements OnInit {
     estate.price = this.price;
     estate.isVerified = false;
     estate.isPromoted = false;
-    estate.sold = false;
+    estate.sold = null;
+    estate.isSold = false;
     estate.chats = [];
     estate.occupied = [];
 
@@ -200,6 +202,9 @@ export class NewEstateComponent implements OnInit {
             this.estateService.addImage(estid, res.filename).subscribe((rep: any) => {
               if (rep.status !== 'OK') {
                 alert('image not set');
+              }
+              else{
+                this.router.navigate(['']);
               }
             });
             },

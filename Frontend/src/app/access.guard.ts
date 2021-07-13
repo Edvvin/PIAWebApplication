@@ -50,9 +50,9 @@ export class AccessGuard implements CanActivate {
         return false;
       }
     }
-    else if (access === 'verifyestates') {
+    else if (access === 'verifyestates' || access === 'sales') {
       if (user) {
-        if(user.userType === 'regular') {
+        if (user.userType === 'regular') {
           this.router.navigate(['']);
           return false;
         }
@@ -65,7 +65,7 @@ export class AccessGuard implements CanActivate {
         return false;
       }
     }
-    else if (access === 'userrequests' || access === 'allusers' || access === 'adduser') {
+    else if (access === 'userrequests' || access === 'allusers' || access === 'adduser' || access === 'setpercent') {
       if (user) {
         if (user.userType === 'admin') {
           return true;

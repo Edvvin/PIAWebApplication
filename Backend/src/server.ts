@@ -6,6 +6,7 @@ import mongoose, { Schema, Types } from 'mongoose';
 import user from './model/user';
 import estate from './model/estate';
 import path from 'path';
+import config from './model/config';
 
 const app = express();
 
@@ -322,6 +323,7 @@ router.route('/search').post((req, res) => {
     let searchObj: any = {
         price: { $gt: req.body.lower, $lt: req.body.upper },
         isVerified: true,
+        isSold: false,
     };
 
     if (req.body.city !== '') {
@@ -364,7 +366,7 @@ router.route('/getestate').post((req, res) => {
 
 router.route('/sellestate').post((req, res) => {
     let id = req.body.id;
-    estate.findByIdAndUpdate(id, { $set: { sold: true } },
+    estate.findByIdAndUpdate(id, { $set: { isSold: true } },
         (err, res1) => {
             if (err) {
                 let data = {
@@ -501,11 +503,17 @@ router.route('/sendoffer').post((req, res) => {
         if (est) {
             let c = est.chats.find((chat: any) => (chat.username === username));
             if (c) {
-                c.offer = {
-                    price: offer,
-                    fromDate: fromDate,
-                    toDate: toDate,
-                };
+                if (est.isForSale) {
+                    c.offer = {
+                        price: offer,
+                    };
+                } else {
+                    c.offer = {
+                        price: offer,
+                        fromDate: fromDate,
+                        toDate: toDate,
+                    };
+                }
                 c.time = new Date();
                 c.isArchivedByCustomer = false;
                 c.isArchivedByOwner = false;
@@ -538,49 +546,60 @@ router.route('/acceptoffer').post((req, res) => {
     let id = req.body.id;
     let username = req.body.username;
 
-    estate.findById(id, (err, est: any) => {
-        if (err) {
-            let data = {
-                status: 'FAIL',
-                message: 'Failed to send offer',
-            };
-            res.json(data);
-        }
-        if (est) {
-            let c = est.chats.find((chat: any) => (chat.username === username));
-            if (c) {
-                if (est.isForSale) {
-                    est.sold = true;
-                } else {
-                    let ocu = {
-                        fromDate: c.offer.fromDate,
-                        toDate: c.offer.toDate,
-                    };
-                    est.occupied.push(ocu);
-                }
-                c.offer = {};
-                est.save().then((x: any) => {
-                    let data = {
-                        status: 'OK',
-                        message: 'Success',
-                    };
-                    res.json(data);
-                }).catch((err: any) => {
-                    console.log(err);
-                    let data = {
-                        status: 'FAIL',
-                        message: 'Failed to send offer',
-                    };
-                    res.json(data);
-                });
+    config.findOne({}, (err, conf: any) => {
+        estate.findById(id, (err, est: any) => {
+            if (err) {
+                let data = {
+                    status: 'FAIL',
+                    message: 'Failed to send offer',
+                };
+                res.json(data);
             }
-        } else {
-            let data = {
-                status: 'FAIL',
-                message: 'Failed to send offer',
-            };
-            res.json(data);
-        }
+            if (est) {
+                let c = est.chats.find((chat: any) => (chat.username === username));
+                if (c) {
+                    if (est.isForSale) {
+                        let p = c.offer.price;
+                        if (!est.ownedByAgency) {
+                            p *= conf.percent / 100.0;
+                        }
+                        est.sold = {
+                            toUser: username,
+                            amount: c.offer.price,
+                            profit: p,
+                        };
+                        est.isSold = true;
+                    } else {
+                        let ocu = {
+                            fromDate: c.offer.fromDate,
+                            toDate: c.offer.toDate,
+                        };
+                        est.occupied.push(ocu);
+                    }
+                    c.offer = {};
+                    est.save().then((x: any) => {
+                        let data = {
+                            status: 'OK',
+                            message: 'Success',
+                        };
+                        res.json(data);
+                    }).catch((err: any) => {
+                        console.log(err);
+                        let data = {
+                            status: 'FAIL',
+                            message: 'Failed to send offer',
+                        };
+                        res.json(data);
+                    });
+                }
+            } else {
+                let data = {
+                    status: 'FAIL',
+                    message: 'Failed to send offer',
+                };
+                res.json(data);
+            }
+        });
     });
 });
 
@@ -801,7 +820,7 @@ router.route('/verifyestate').post((req, res) => {
     estate.findById(id, (err, est: any) => {
         if (est) {
             est.isVerified = true;
-            est.save().then(()=>{
+            est.save().then(() => {
                 let data = {
                     status: 'OK',
                 };
@@ -824,6 +843,37 @@ router.route('/verifyestate').post((req, res) => {
         }
     });
 });
+
+router.route('/getallsold').get((req, res) => {
+    estate.find({isSold: true}, (err, e) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(e);
+        }
+    });
+});
+
+router.route('/setpercent').post((req, res) => {
+    let percent = req.body.percent;
+    config.findOne({}, (err, conf: any) => {
+        conf.percent = percent;
+        conf.save().then(()=>{
+            let data = {
+                status: 'OK',
+            };
+
+            res.json(data);
+        }).catch((err: any) => {
+            let data = {
+                status: 'FAIL',
+            };
+
+            res.json(data);
+        });
+    });
+});
+
 
 //app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/', router);

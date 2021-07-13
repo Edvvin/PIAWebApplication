@@ -35,7 +35,7 @@
             <button mat-fab (click)="sendMessageClick()" [disabled]="isBlocked">
                 <mat-icon>send</mat-icon>
             </button>
-            <div *ngIf="!estate.sold" class="sold">
+            <div *ngIf="!estate.isSold" class="sold">
                 <div class="offerbox" *ngIf="!isOwner; else ownerElse">
                     <mat-form-field appearance="fill">
                         <mat-label>Offer</mat-label>

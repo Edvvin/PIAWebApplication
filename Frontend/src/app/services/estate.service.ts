@@ -149,4 +149,18 @@ export class EstateService {
     return this.http.post(`${this.uri}/verifyestate`, data);
   }
 
+  getAllSold() {
+    let data = {};
+
+    return this.http.get(`${this.uri}/getallsold`, data);
+  }
+
+  setPercent(percent: number) {
+    let data = {
+      percent: percent,
+    };
+
+    return this.http.post(`${this.uri}/setpercent`, data);
+  }
+
 }

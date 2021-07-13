@@ -157,7 +157,7 @@ export class ChatComponent implements OnInit {
   }
 
   sendOfferClick() {
-    if (!this.dateTo || !this.dateFrom) {
+    if ((!this.dateTo || !this.dateFrom) && !this.estate.isForSale) {
       this.btnerr = "warn";
       return;
     }

@@ -14,6 +14,8 @@ import { AccessGuard } from './access.guard';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { VerifyEstatesComponent } from './verify-estates/verify-estates.component';
+import { SalesComponent } from './sales/sales.component';
+import { SetpercentComponent } from './setpercent/setpercent.component';
 
 
 const routes: Routes = [
@@ -89,6 +91,16 @@ const routes: Routes = [
   {
     path: 'verifyestates', component: VerifyEstatesComponent,
     data: { breadcrumb: 'Verify Estates' },
+    canActivate: [AccessGuard]
+  },
+  {
+    path: 'sales', component: SalesComponent,
+    data: { breadcrumb: 'Sales' },
+    canActivate: [AccessGuard]
+  },
+  {
+    path: 'setpercent', component: SetpercentComponent,
+    data: { breadcrumb: 'Percent' },
     canActivate: [AccessGuard]
   },
   {

@@ -113,8 +113,21 @@ let Estate = new Schema({
         type: [String],
     },
     sold: {
+        type: {
+            toUser: {
+                type: String,
+            },
+            amount: {
+                type: Number,
+            },
+            profit: {
+                type: Number,
+            },
+        },
+    },
+    isSold: {
         type: Boolean,
-    }
+    },
 });
 
 export default mongoose.model('Estate', Estate, 'estates');

@@ -19,7 +19,8 @@ export class Estate{
     isVerified: boolean;
     chats: Chat[];
     images: string[];
-    sold: boolean;
+    sold: {toUser: string, amount: number, profit: number};
+    isSold: boolean;
     occupied: {
         fromDate: Date,
         toDate: Date
