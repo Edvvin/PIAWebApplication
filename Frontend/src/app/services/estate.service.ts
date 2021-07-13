@@ -135,4 +135,18 @@ export class EstateService {
     return this.http.post(`${this.uri}/myestates`, data);
   }
 
+  getUnverifiedEstates() {
+    let data = {};
+
+    return this.http.get(`${this.uri}/getunverifiedestates`, data);
+  }
+
+  verifyEstate(id: string) {
+    let data = {
+      id: id,
+    };
+
+    return this.http.post(`${this.uri}/verifyestate`, data);
+  }
+
 }

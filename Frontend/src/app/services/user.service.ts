@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { User } from '../data/user';
 import {backendUri} from '../globals';
@@ -8,7 +8,11 @@ import {backendUri} from '../globals';
 })
 export class UserService {
 
-  constructor(private http:HttpClient) { }
+  public logoutEmitter$: EventEmitter<string>;
+
+  constructor(private http:HttpClient) {
+    this.logoutEmitter$ = new EventEmitter();
+   }
 
   uri = backendUri;
 
@@ -23,6 +27,11 @@ export class UserService {
     };
 
     return this.http.post(`${this.uri}/login`, data);
+  }
+
+  logout() {
+    localStorage.removeItem('user');
+    this.logoutEmitter$.emit('');
   }
 
   verifyUser(username: string) {

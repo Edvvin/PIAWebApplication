@@ -17,7 +17,6 @@ import { NewEstateComponent } from './new-estate/new-estate.component';
 import { UserRequestsComponent } from './user-requests/user-requests.component';
 import { EstateCardComponent } from './estate-card/estate-card.component';
 import { ApproveEstatesComponent } from './approve-estates/approve-estates.component';
-import { UserManipulationComponent } from './user-manipulation/user-manipulation.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { FormsModule} from '@angular/forms';
@@ -27,6 +26,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { GalleryCellComponent } from './gallery-cell/gallery-cell.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { AllUsersComponent } from './all-users/all-users.component';
+import { VerifyEstatesComponent } from './verify-estates/verify-estates.component';
 
 
 @NgModule({
@@ -43,13 +43,13 @@ import { AllUsersComponent } from './all-users/all-users.component';
     UserRequestsComponent,
     EstateCardComponent,
     ApproveEstatesComponent,
-    UserManipulationComponent,
     ChatComponent,
     ChatMessageComponent,
     EstatePageComponent,
     GalleryCellComponent,
     EditUserComponent,
     AllUsersComponent,
+    VerifyEstatesComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,19 @@
-<div class="charts" *ngIf="showCharts">
-    <div id="pr_rent_chart"></div>
-    <div id="pr_sell_chart"></div>
-    <div id="cities_chart"></div>
-    <div id="types_chart"></div>
+<div class="accordion" *ngIf="showCharts">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Graphs
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="charts">
+                <div id="pr_rent_chart"></div>
+                <div id="pr_sell_chart"></div>
+                <div id="cities_chart"></div>
+                <div id="types_chart"></div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>
 <div class="search-bar">
     <div>
@@ -33,7 +44,7 @@
 </div>
 <div class="search-results">
     <div class="single-result" *ngFor='let res of searchResults'>
-        <app-estate-card [estate]='res'></app-estate-card>
+        <app-estate-card [estate]='res' [clickable]="true"></app-estate-card>
     </div>
 </div>
 <div class="search-msg" *ngIf='searchResults.length === 0'>

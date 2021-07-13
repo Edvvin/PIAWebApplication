@@ -3,6 +3,7 @@ import { EstateService } from '../services/estate.service';
 import { Estate } from '../data/estate';
 import * as c3 from 'c3';
 import { User } from '../data/user';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { User } from '../data/user';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-  constructor(private estateService: EstateService) { }
+  constructor(private estateService: EstateService, private userService: UserService) { }
 
   estate: Estate;
   user: User;
@@ -158,6 +159,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (this.user && this.user.userType !== 'regular'){
       this.showCharts = true;
     }
+
+    this.userService.logoutEmitter$.subscribe(s=>{
+      this.user = JSON.parse(localStorage.getItem('user'));
+      if (this.user && this.user.userType !== 'regular') {
+        this.showCharts = true;
+      }
+      else{
+        this.showCharts = false;
+      }
+    });
+
   }
 
   search() {

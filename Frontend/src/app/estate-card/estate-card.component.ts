@@ -18,6 +18,9 @@ export class EstateCardComponent implements OnInit {
   @Input()
   estate : Estate;
 
+  @Input()
+  clickable: boolean;
+
   imgUrl;
 
   rooms : number[];
@@ -42,6 +45,9 @@ export class EstateCardComponent implements OnInit {
   }
 
   openCard(){
+    if (!this.clickable){
+      return;
+    }
     let u: User = JSON.parse(localStorage.getItem('user'));
     if (u){
       this.router.navigate(['/estate', this.estate._id]);

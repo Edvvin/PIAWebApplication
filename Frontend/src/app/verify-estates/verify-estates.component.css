@@ -1,0 +1,9 @@
+.search-results {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+button {
+    margin-bottom: 10px;
+}

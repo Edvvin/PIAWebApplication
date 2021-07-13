@@ -169,6 +169,7 @@ export class NewEstateComponent implements OnInit {
     estate.isFurnished = this.isFurnished;
     estate.isForSale = this.isForSale;
     estate.price = this.price;
+    estate.isVerified = false;
     estate.isPromoted = false;
     estate.sold = false;
     estate.chats = [];

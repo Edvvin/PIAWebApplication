@@ -48,6 +48,9 @@ let Estate = new Schema({
     ownedByAgency: {
         type: Boolean,
     },
+    isVerified: {
+        type: Boolean,
+    },
     isPromoted: {
         type: Boolean,
     },

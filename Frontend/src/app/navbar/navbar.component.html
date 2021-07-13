@@ -8,6 +8,17 @@
             <a mat-list-item routerLink=''>Home Page</a>
             <a mat-list-item routerLink='myestates' *ngIf="!isGuest">My Estates</a>
 
+            <mat-expansion-panel *ngIf="isAdmin || isAgent">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Agent
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <a mat-list-item routerLink='/verifyestates' routerLinkActive="active-list-item">Verify Estates</a>
+            </mat-expansion-panel>
+
             <mat-expansion-panel *ngIf="isAdmin">
                 <mat-expansion-panel-header>
                     <mat-panel-title>

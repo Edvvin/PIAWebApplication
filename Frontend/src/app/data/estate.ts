@@ -16,6 +16,7 @@ export class Estate{
     owner: string;
     ownedByAgency: boolean;
     isPromoted: boolean;
+    isVerified: boolean;
     chats: Chat[];
     images: string[];
     sold: boolean;

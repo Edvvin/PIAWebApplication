@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserManipulationComponent } from './user-manipulation.component';
+import { VerifyEstatesComponent } from './verify-estates.component';
 
-describe('UserManipulationComponent', () => {
-  let component: UserManipulationComponent;
-  let fixture: ComponentFixture<UserManipulationComponent>;
+describe('VerifyEstatesComponent', () => {
+  let component: VerifyEstatesComponent;
+  let fixture: ComponentFixture<VerifyEstatesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserManipulationComponent ]
+      declarations: [ VerifyEstatesComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserManipulationComponent);
+    fixture = TestBed.createComponent(VerifyEstatesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

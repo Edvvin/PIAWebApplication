@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AccessGuard implements CanActivate {
 
-  constructor(private router: Router){
+  constructor(private router: Router) {
 
   }
 
@@ -17,8 +17,8 @@ export class AccessGuard implements CanActivate {
 
     let user = JSON.parse(localStorage.getItem('user'));
     let access = route.url[0].toString();
-    if (access === 'login' || access === 'signup'){
-      if (user){
+    if (access === 'login' || access === 'signup') {
+      if (user) {
         this.router.navigate(['']);
         return false;
       }
@@ -27,14 +27,14 @@ export class AccessGuard implements CanActivate {
     else if (access === 'inbox' || access === 'myestates'
       || access === 'newestate' || access === 'usersettings'
       || access === 'estate' || access === 'edituser') {
-      if (user){
+      if (user) {
         return true;
       }
       this.router.navigate(['']);
       return false;
     }
-    else if (access === 'chat'){
-      if (route.url.length === 1){
+    else if (access === 'chat') {
+      if (route.url.length === 1) {
         this.router.navigate(['']);
         return false;
       }
@@ -45,14 +45,29 @@ export class AccessGuard implements CanActivate {
         this.router.navigate(['']);
         return false;
       }
-      else{
+      else {
         this.router.navigate(['']);
         return false;
       }
     }
-    else if (access === 'userrequests' || access === 'allusers' || access === 'adduser'){
-      if (user){
-        if (user.userType === 'admin'){
+    else if (access === 'verifyestates') {
+      if (user) {
+        if(user.userType === 'regular') {
+          this.router.navigate(['']);
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+      else {
+        this.router.navigate(['']);
+        return false;
+      }
+    }
+    else if (access === 'userrequests' || access === 'allusers' || access === 'adduser') {
+      if (user) {
+        if (user.userType === 'admin') {
           return true;
         }
         this.router.navigate(['']);

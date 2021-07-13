@@ -11,10 +11,11 @@ import { UserService } from '../services/user.service';
 export class NavbarComponent implements OnInit {
 
 
-  constructor( private router : Router) { }
+  constructor(private router: Router, private userService: UserService) {}
 
   isGuest = true;
   isAdmin = false;
+  isAgent = false;
   user: User;
 
   sidebar = false;
@@ -22,10 +23,14 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.isAdmin = false;
+    this.isAgent = false;
     if (this.user) {
       this.isGuest = false;
-      if(this.user.userType === 'admin'){
+      if (this.user.userType === 'admin') {
         this.isAdmin = true;
+      }
+      else if (this.user.userType === 'agent') {
+        this.isAgent = true;
       }
     }
     else {
@@ -39,6 +44,9 @@ export class NavbarComponent implements OnInit {
         if (this.user.userType === 'admin') {
           this.isAdmin = true;
         }
+        else if (this.user.userType === 'agent') {
+          this.isAgent = true;
+        }
       }
       else {
         this.isGuest = true;
@@ -51,9 +59,10 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('user');
     this.isGuest = true;
     this.isAdmin = false;
+    this.isAgent = false;
+    this.userService.logout();
     this.user = null;
     this.router.navigate(['/']);
   }

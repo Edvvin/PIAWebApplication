@@ -1,0 +1,8 @@
+<div class="search-results">
+    <div class="single-result" *ngFor='let res of estates'>
+        <app-estate-card [estate]='res' [clickable]='false'>
+            <button mat-raised-button color="accent" (click)="verify(res)">Verify</button>
+        </app-estate-card>
+    </div>
+</div>
+

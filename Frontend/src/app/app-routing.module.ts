@@ -13,6 +13,7 @@ import { UserRequestsComponent } from './user-requests/user-requests.component';
 import { AccessGuard } from './access.guard';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { AllUsersComponent } from './all-users/all-users.component';
+import { VerifyEstatesComponent } from './verify-estates/verify-estates.component';
 
 
 const routes: Routes = [
@@ -83,6 +84,11 @@ const routes: Routes = [
   {
     path: 'adduser', component: SignupComponent,
     data: { breadcrumb: 'Add User' },
+    canActivate: [AccessGuard]
+  },
+  {
+    path: 'verifyestates', component: VerifyEstatesComponent,
+    data: { breadcrumb: 'Verify Estates' },
     canActivate: [AccessGuard]
   },
   {

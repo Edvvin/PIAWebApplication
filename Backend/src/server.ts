@@ -321,6 +321,7 @@ router.route('/addestate').post((req, res) => {
 router.route('/search').post((req, res) => {
     let searchObj: any = {
         price: { $gt: req.body.lower, $lt: req.body.upper },
+        isVerified: true,
     };
 
     if (req.body.city !== '') {
@@ -745,10 +746,10 @@ router.route('/block').post((req, res) => {
         else {
             if (usr) {
                 if (isAgency) {
-                    if(usr.blockedByAgency){
+                    if (usr.blockedByAgency) {
                         usr.blockedByAgency = false;
                     }
-                    else{
+                    else {
                         usr.blockedByAgency = true;
                     }
                 }
@@ -765,7 +766,7 @@ router.route('/block').post((req, res) => {
                         usr.blockedBy = [blocker];
                     }
                 }
-                usr.save().then(()=>{
+                usr.save().then(() => {
                     let data = {
                         status: 'OK',
                     };
@@ -782,6 +783,46 @@ router.route('/block').post((req, res) => {
             }
         }
     })
+});
+
+router.route('/getunverifiedestates').get((req, res) => {
+    estate.find({ isVerified: false }, (err, est) => {
+        if (err) {
+            console.log('Error');
+        } else {
+            res.json(est);
+        }
+    });
+});
+
+router.route('/verifyestate').post((req, res) => {
+    let id = req.body.id;
+
+    estate.findById(id, (err, est: any) => {
+        if (est) {
+            est.isVerified = true;
+            est.save().then(()=>{
+                let data = {
+                    status: 'OK',
+                };
+
+                res.json(data);
+            }).catch((err: any) => {
+                let data = {
+                    status: 'FAIL',
+                };
+
+                res.json(data);
+            });
+        }
+        else {
+            let data = {
+                status: 'FAIL',
+            };
+
+            res.json(data);
+        }
+    });
 });
 
 //app.get('/', (req, res) => res.send('Hello World!'));
