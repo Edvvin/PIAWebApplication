@@ -37,7 +37,7 @@ router.route('/login').post((req, res) => {
     let username = req.body.username;
     let password = req.body.password;
 
-    user.findOne({ 'username': username }, (err, usr: any) => {
+    user.findOne({ 'username': username, isVerified: 'verified' }, (err, usr: any) => {
         if (err) {
             console.log(err);
         } else {

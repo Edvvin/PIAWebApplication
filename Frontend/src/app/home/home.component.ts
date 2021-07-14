@@ -4,6 +4,8 @@ import { Estate } from '../data/estate';
 import * as c3 from 'c3';
 import { User } from '../data/user';
 import { UserService } from '../services/user.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,7 @@ import { UserService } from '../services/user.service';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-  constructor(private estateService: EstateService, private userService: UserService) { }
+  constructor(private estateService: EstateService, private userService: UserService, private sanitizer: DomSanitizer, private router: Router) { }
 
   estate: Estate;
   user: User;
@@ -39,10 +41,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       res.forEach((est: Estate) => {
         let cityInd = cities.findIndex((c => c === est.city));
         if (cityInd !== -1) {
-          city_cnt[cityInd]++;
+          city_cnt[cityInd + 1]++;
         } else {
           cities.push(est.city);
-          city_cnt.push(0);
+          city_cnt.push(1);
         }
         if (est.isForSale) {
           let temp = (Math.floor(est.price / 1000.0) * 1000);
@@ -53,13 +55,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
           else {
             pr_sell.push(pr);
-            pr_sell_cnt.push(0);
+            pr_sell_cnt.push(1);
           }
           if (est.isHouse) {
-            types_cnt[0][0]++;
+            types_cnt[0][1]++;
           }
           else {
-            types_cnt[0][1]++;
+            types_cnt[0][2]++;
           }
         }
         else {
@@ -71,16 +73,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
           else {
             pr_rent.push(pr);
-            pr_rent_cnt.push(0);
+            pr_rent_cnt.push(1);
           }
           if (est.isHouse) {
-            types_cnt[1][0]++;
+            types_cnt[1][1]++;
           }
           else {
-            types_cnt[1][1]++;
+            types_cnt[1][2]++;
           }
         }
       });
+      console.log(city_cnt);
       let cities_chart = c3.generate({
         bindto: '#cities_chart',
         data: {
@@ -135,6 +138,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
         }
       });
+      console.log(types_cnt);
       let types_chart = c3.generate({
         bindto: '#types_chart',
         data: {
@@ -222,13 +226,38 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.promotedResults = [];
         this.searchResults.forEach((e: Estate) => {
           if (e.isPromoted) {
-            this.promotedResults.push(e);
+            if (e.images.length > 0) {
+              let imgUrl: any;
+              var file = e.images[this.getRandomInt(e.images.length)];
+              this.userService.download(file).subscribe(
+                u => {
+                  let url = URL.createObjectURL(u);
+                  imgUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+                  this.promotedResults.push({
+                    estate: e,
+                    imgUrl: imgUrl,
+                  });
+                },
+                error => console.error(error)
+              );
+            }
           }
         });
       }
       else {
       }
     });
+  }
+
+  getRandomInt(max){
+    return Math.floor(Math.random() * max);
+  }
+
+  gotoEstate(e: Estate) {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if (this.user){
+      this.router.navigate(['/estate', e._id]);
+    }
   }
 
 }

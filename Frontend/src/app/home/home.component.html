@@ -36,9 +36,9 @@
     </div>
 </div>
 <div class="search-promoted" *ngIf="promotedResults.length>0">
-    <carousel [dots]="true">
-        <div *ngFor="let res of promotedResults">
-            <app-gallery-cell [estate]="res"></app-gallery-cell>
+    <carousel [objectFit]="'cover'" [cellWidth]="'100%'" [autoplay]="true" [dots]="true">
+        <div *ngFor="let res of promotedResults" class="carousel-cell">
+            <img [src]="res.imgUrl" alt="Photo of estate" (click)="gotoEstate(res.estate)">
         </div>
     </carousel>
 </div>

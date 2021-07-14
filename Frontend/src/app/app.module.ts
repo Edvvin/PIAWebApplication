@@ -23,7 +23,6 @@ import { FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { EstatePageComponent } from './estate-page/estate-page.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
-import { GalleryCellComponent } from './gallery-cell/gallery-cell.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { VerifyEstatesComponent } from './verify-estates/verify-estates.component';
@@ -48,7 +47,6 @@ import { SetpercentComponent } from './setpercent/setpercent.component';
     ChatComponent,
     ChatMessageComponent,
     EstatePageComponent,
-    GalleryCellComponent,
     EditUserComponent,
     AllUsersComponent,
     VerifyEstatesComponent,

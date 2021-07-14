@@ -32,7 +32,7 @@ let User = new Schema({
         type: [String],
     },
     blockedByAgency : {
-        type: String,
+        type: Boolean,
     },
     image: {
         type: String,

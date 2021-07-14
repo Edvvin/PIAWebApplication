@@ -114,6 +114,8 @@ export class SignupComponent implements OnInit {
     user.password = this.password;
     user.isVerified = 'unverified';
     user.userType = this.isAgent ? 'agent' : 'regular';
+    user.blockedBy = [];
+    user.blockedByAgency = false;
     user.image = '';
 
     this.userService.register(user).subscribe((res: any) => {

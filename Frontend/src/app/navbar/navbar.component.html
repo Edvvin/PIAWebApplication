@@ -6,7 +6,7 @@
                 <mat-icon>navigate_before</mat-icon>
             </a>
             <a mat-list-item routerLink=''>Home Page</a>
-            <a mat-list-item routerLink='myestates' *ngIf="!isGuest">My Estates</a>
+            <a mat-list-item routerLink='myestates' *ngIf="!isGuest && !isAgent && !isAdmin">My Estates</a>
             <a mat-list-item routerLink='newestate' *ngIf="!isGuest">New Estate</a>
 
             <mat-expansion-panel *ngIf="isAdmin || isAgent">

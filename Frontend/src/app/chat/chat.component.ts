@@ -107,7 +107,6 @@ export class ChatComponent implements OnInit {
               else {
                 if (usr.blockedBy.find((e => e === this.user.username))) {
                   this.otherBlocked = true;
-                  console.log('adsf');
                 }
               }
             });
@@ -214,7 +213,6 @@ export class ChatComponent implements OnInit {
           let frod = new Date(r.fromDate);
           if (this.isAfter(date, frod, true) && this.isAfter(frod, this.dateFrom, true)) {
             ret = false;
-            console.log(frod);
             return;
           }
         });
